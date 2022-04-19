@@ -12,9 +12,6 @@ subscription OnCreateTool {
     openBorrowRequest
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
 subscription OnUpdateTool {
@@ -30,9 +27,6 @@ subscription OnUpdateTool {
     openBorrowRequest
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
 subscription OnDeleteTool {
@@ -48,8 +42,5 @@ subscription OnDeleteTool {
     openBorrowRequest
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
