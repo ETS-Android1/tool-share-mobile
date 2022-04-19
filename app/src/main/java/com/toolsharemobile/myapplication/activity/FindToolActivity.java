@@ -70,12 +70,7 @@ public class FindToolActivity extends AppCompatActivity {
 
                 int id = item.getItemId();
 
-                if (id == R.id.bnm_home) {
-                    Intent intent = new Intent(FindToolActivity.this, MainActivity.class);
-                    startActivity(intent);
-
-                    return true;
-                } else if (id == R.id.bnm_settings) {
+                if (id == R.id.bnm_settings) {
 
                     Intent intent = new Intent(FindToolActivity.this, LoginActivity.class);
                     startActivity(intent);
