@@ -1,0 +1,55 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateTool {
+  onCreateTool {
+    id
+    toolType
+    listedByUser
+    location
+    borrowByUser
+    S3imageKey
+    isAvailable
+    openReturnRequest
+    openBorrowRequest
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+subscription OnUpdateTool {
+  onUpdateTool {
+    id
+    toolType
+    listedByUser
+    location
+    borrowByUser
+    S3imageKey
+    isAvailable
+    openReturnRequest
+    openBorrowRequest
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+subscription OnDeleteTool {
+  onDeleteTool {
+    id
+    toolType
+    listedByUser
+    location
+    borrowByUser
+    S3imageKey
+    isAvailable
+    openReturnRequest
+    openBorrowRequest
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
