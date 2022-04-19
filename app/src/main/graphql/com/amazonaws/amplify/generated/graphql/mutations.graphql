@@ -1,0 +1,64 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateTool(
+  $input: CreateToolInput!
+  $condition: ModelToolConditionInput
+) {
+  createTool(input: $input, condition: $condition) {
+    id
+    toolType
+    listedByUser
+    location
+    borrowByUser
+    S3imageKey
+    isAvailable
+    openReturnRequest
+    openBorrowRequest
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+mutation UpdateTool(
+  $input: UpdateToolInput!
+  $condition: ModelToolConditionInput
+) {
+  updateTool(input: $input, condition: $condition) {
+    id
+    toolType
+    listedByUser
+    location
+    borrowByUser
+    S3imageKey
+    isAvailable
+    openReturnRequest
+    openBorrowRequest
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+mutation DeleteTool(
+  $input: DeleteToolInput!
+  $condition: ModelToolConditionInput
+) {
+  deleteTool(input: $input, condition: $condition) {
+    id
+    toolType
+    listedByUser
+    location
+    borrowByUser
+    S3imageKey
+    isAvailable
+    openReturnRequest
+    openBorrowRequest
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}

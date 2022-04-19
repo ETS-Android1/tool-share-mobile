@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-tool-share-mobile-dev-134326-authRole",
+      "UnauthRoleArn": "arn:aws:iam::573887199718:role/amplify-tool-share-mobile-dev-134326-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::573887199718:role/amplify-tool-share-mobile-dev-134326-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-tool-share-mobile-dev-134326-deployment",
+      "UnauthRoleName": "amplify-tool-share-mobile-dev-134326-unauthRole",
+      "StackName": "amplify-tool-share-mobile-dev-134326",
+      "StackId": "arn:aws:cloudformation:us-west-2:573887199718:stack/amplify-tool-share-mobile-dev-134326/5e56bfc0-c021-11ec-ae73-06425efff69d",
+      "AmplifyAppId": "d220lhndpl2fqv"
+    }
+  }
+}
