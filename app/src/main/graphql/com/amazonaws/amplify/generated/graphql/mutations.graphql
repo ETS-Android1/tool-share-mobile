@@ -15,9 +15,6 @@ mutation CreateTool(
     openBorrowRequest
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
 mutation UpdateTool(
@@ -36,9 +33,6 @@ mutation UpdateTool(
     openBorrowRequest
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
 mutation DeleteTool(
@@ -57,8 +51,5 @@ mutation DeleteTool(
     openBorrowRequest
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }

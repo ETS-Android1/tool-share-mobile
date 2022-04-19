@@ -1,4 +1,4 @@
-type Tool @model {
+type Tool @model @auth(rules: [{allow: public}]){
   id: ID!
   toolType: ToolTypeEnum!
   listedByUser: String!
