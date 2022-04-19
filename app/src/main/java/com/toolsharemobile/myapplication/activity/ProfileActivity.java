@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.toolsharemobile.myapplication.R;
 
@@ -20,6 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        setUpCreateToolNavigation();
         setUpNavBar();
     }
 
@@ -33,13 +35,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                 int id = item.getItemId();
 
-                if(id == R.id.bnm_home) {
-                    Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                    startActivity(intent);
 
-                    return true;
-                }
-                else if (id == R.id.bnm_settings) {
+                if (id == R.id.bnm_settings) {
 
                     Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -63,5 +60,19 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    public void setUpCreateToolNavigation(){
+
+        FloatingActionButton floatingActionButton = findViewById(R.id.fabHome);
+
+        floatingActionButton.setOnClickListener(view -> {
+            Intent intent = new Intent(ProfileActivity.this, CreateToolActivity.class);
+            startActivity(intent);
+
+        });
+
+
+
     }
 }
