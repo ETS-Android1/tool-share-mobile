@@ -1,5 +1,6 @@
 package com.toolsharemobile.myapplication.adapter;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,19 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amplifyframework.datastore.generated.model.Tool;
 import com.toolsharemobile.myapplication.R;
 import com.toolsharemobile.myapplication.activity.FindToolActivity;
+import com.toolsharemobile.myapplication.activity.ProfileActivity;
+import com.toolsharemobile.myapplication.activity.ViewBorrowedToolActivity;
 import com.toolsharemobile.myapplication.activity.ViewToolListingActivity;
 
 import java.util.List;
 
+public class BorrowToolRecyclerViewAdapter extends RecyclerView.Adapter {
 
-public class ToolListingRecyclerViewAdapter extends RecyclerView.Adapter{
 
     List<Tool> toolList;
     Context callingActivity;
+    public static final String TAG = "Tool to borrow";
 
 
 
-    public ToolListingRecyclerViewAdapter(List<Tool> toolList, Context callingActivity){
+    public BorrowToolRecyclerViewAdapter(List<Tool> toolList, Context callingActivity){
         this.toolList = toolList;
         this.callingActivity = callingActivity;
 
@@ -46,13 +50,15 @@ public class ToolListingRecyclerViewAdapter extends RecyclerView.Adapter{
         Tool tool = toolList.get(position);
 
 
+
         View toolViewHolder = holder.itemView;
         toolViewHolder.setOnClickListener(view -> {
-            Intent goToViewToolListingIntent = new Intent(callingActivity, ViewToolListingActivity.class);
-            goToViewToolListingIntent.putExtra(FindToolActivity.TOOL_ID_TAG, tool.getId());
+            Intent goToViewToolListingIntent = new Intent(callingActivity, ViewBorrowedToolActivity.class);
+            goToViewToolListingIntent.putExtra(TAG, tool.getId());
             callingActivity.startActivity(goToViewToolListingIntent);
 
         });
+
     }
 
     @Override
@@ -66,5 +72,4 @@ public class ToolListingRecyclerViewAdapter extends RecyclerView.Adapter{
             super(itemView);
         }
     }
-
 }
