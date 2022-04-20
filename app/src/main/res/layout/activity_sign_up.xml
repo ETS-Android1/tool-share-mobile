@@ -7,6 +7,31 @@
     android:background="@drawable/login_ui"
     tools:context=".activity.SignUpActivity">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editText2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#fff"
+        android:textColorHint="#80000000"
+        app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#80000000">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#fff"
+            android:hint="Create A Password"
+            android:inputType="textPassword"
+            android:textColor="#000" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
@@ -50,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.69" />
+        app:layout_constraintGuide_percent="0.67" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editText"
@@ -68,10 +93,41 @@
         app:layout_constraintStart_toStartOf="@+id/guideline3">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTextWebEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:backgroundTint="#50ffffff"
             android:hint="Create A Username"
+            android:inputType="textWebEmailAddress"
+            android:textColor="#000" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signupEmailEditText"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#fff"
+        android:textColorHint="#80000000"
+        app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTsignupEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#50ffffff"
+            android:hint="Email"
             android:inputType="textWebEmailAddress"
             android:textColor="#000" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -81,7 +137,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="108dp"
         android:background="#fff"
         android:textColorHint="#80000000"
         app:boxStrokeColor="@color/black"
@@ -93,14 +149,15 @@
         app:passwordToggleTint="#80000000">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:backgroundTint="#fff"
-            android:hint="Create A Password"
+            android:hint="Confirm Password"
             android:inputType="textPassword"
             android:textColor="#000" />
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <TextView
         android:id="@+id/textView"
@@ -121,7 +178,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="52dp"
         android:background="@drawable/green"
         android:elevation="10dp"
         android:gravity="center"
@@ -140,5 +197,12 @@
             android:textColor="@color/white"
             android:textSize="22sp" />
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="562dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
