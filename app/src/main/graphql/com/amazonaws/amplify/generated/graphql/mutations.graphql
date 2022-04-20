@@ -7,7 +7,8 @@ mutation CreateTool(
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
@@ -25,7 +26,8 @@ mutation UpdateTool(
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
@@ -43,7 +45,8 @@ mutation DeleteTool(
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable

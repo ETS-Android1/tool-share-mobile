@@ -4,7 +4,8 @@ query GetTool($id: ID!) {
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
@@ -24,7 +25,8 @@ query ListTools(
       id
       toolType
       listedByUser
-      location
+      lat
+      lon
       borrowByUser
       S3imageKey
       isAvailable

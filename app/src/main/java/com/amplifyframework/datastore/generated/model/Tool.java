@@ -8,7 +8,10 @@ import java.util.Objects;
 
 import androidx.core.util.ObjectsCompat;
 
+import com.amplifyframework.core.model.AuthStrategy;
 import com.amplifyframework.core.model.Model;
+import com.amplifyframework.core.model.ModelOperation;
+import com.amplifyframework.core.model.annotations.AuthRule;
 import com.amplifyframework.core.model.annotations.Index;
 import com.amplifyframework.core.model.annotations.ModelConfig;
 import com.amplifyframework.core.model.annotations.ModelField;
@@ -18,12 +21,15 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
 /** This is an auto generated class representing the Tool type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "Tools")
+@ModelConfig(pluralName = "Tools", authRules = {
+  @AuthRule(allow = AuthStrategy.PUBLIC, operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
+})
 public final class Tool implements Model {
   public static final QueryField ID = field("Tool", "id");
   public static final QueryField TOOL_TYPE = field("Tool", "toolType");
   public static final QueryField LISTED_BY_USER = field("Tool", "listedByUser");
-  public static final QueryField LOCATION = field("Tool", "location");
+  public static final QueryField LAT = field("Tool", "lat");
+  public static final QueryField LON = field("Tool", "lon");
   public static final QueryField BORROW_BY_USER = field("Tool", "borrowByUser");
   public static final QueryField S3IMAGE_KEY = field("Tool", "S3imageKey");
   public static final QueryField IS_AVAILABLE = field("Tool", "isAvailable");
@@ -32,7 +38,8 @@ public final class Tool implements Model {
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="ToolTypeEnum", isRequired = true) ToolTypeEnum toolType;
   private final @ModelField(targetType="String", isRequired = true) String listedByUser;
-  private final @ModelField(targetType="String", isRequired = true) String location;
+  private final @ModelField(targetType="String") String lat;
+  private final @ModelField(targetType="String") String lon;
   private final @ModelField(targetType="String") String borrowByUser;
   private final @ModelField(targetType="String") String S3imageKey;
   private final @ModelField(targetType="Boolean") Boolean isAvailable;
@@ -52,8 +59,12 @@ public final class Tool implements Model {
       return listedByUser;
   }
   
-  public String getLocation() {
-      return location;
+  public String getLat() {
+      return lat;
+  }
+  
+  public String getLon() {
+      return lon;
   }
   
   public String getBorrowByUser() {
@@ -84,11 +95,12 @@ public final class Tool implements Model {
       return updatedAt;
   }
   
-  private Tool(String id, ToolTypeEnum toolType, String listedByUser, String location, String borrowByUser, String S3imageKey, Boolean isAvailable, Boolean openReturnRequest, Boolean openBorrowRequest) {
+  private Tool(String id, ToolTypeEnum toolType, String listedByUser, String lat, String lon, String borrowByUser, String S3imageKey, Boolean isAvailable, Boolean openReturnRequest, Boolean openBorrowRequest) {
     this.id = id;
     this.toolType = toolType;
     this.listedByUser = listedByUser;
-    this.location = location;
+    this.lat = lat;
+    this.lon = lon;
     this.borrowByUser = borrowByUser;
     this.S3imageKey = S3imageKey;
     this.isAvailable = isAvailable;
@@ -107,7 +119,8 @@ public final class Tool implements Model {
       return ObjectsCompat.equals(getId(), tool.getId()) &&
               ObjectsCompat.equals(getToolType(), tool.getToolType()) &&
               ObjectsCompat.equals(getListedByUser(), tool.getListedByUser()) &&
-              ObjectsCompat.equals(getLocation(), tool.getLocation()) &&
+              ObjectsCompat.equals(getLat(), tool.getLat()) &&
+              ObjectsCompat.equals(getLon(), tool.getLon()) &&
               ObjectsCompat.equals(getBorrowByUser(), tool.getBorrowByUser()) &&
               ObjectsCompat.equals(getS3imageKey(), tool.getS3imageKey()) &&
               ObjectsCompat.equals(getIsAvailable(), tool.getIsAvailable()) &&
@@ -124,7 +137,8 @@ public final class Tool implements Model {
       .append(getId())
       .append(getToolType())
       .append(getListedByUser())
-      .append(getLocation())
+      .append(getLat())
+      .append(getLon())
       .append(getBorrowByUser())
       .append(getS3imageKey())
       .append(getIsAvailable())
@@ -143,7 +157,8 @@ public final class Tool implements Model {
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("toolType=" + String.valueOf(getToolType()) + ", ")
       .append("listedByUser=" + String.valueOf(getListedByUser()) + ", ")
-      .append("location=" + String.valueOf(getLocation()) + ", ")
+      .append("lat=" + String.valueOf(getLat()) + ", ")
+      .append("lon=" + String.valueOf(getLon()) + ", ")
       .append("borrowByUser=" + String.valueOf(getBorrowByUser()) + ", ")
       .append("S3imageKey=" + String.valueOf(getS3imageKey()) + ", ")
       .append("isAvailable=" + String.valueOf(getIsAvailable()) + ", ")
@@ -177,6 +192,7 @@ public final class Tool implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -185,7 +201,8 @@ public final class Tool implements Model {
     return new CopyOfBuilder(id,
       toolType,
       listedByUser,
-      location,
+      lat,
+      lon,
       borrowByUser,
       S3imageKey,
       isAvailable,
@@ -198,18 +215,15 @@ public final class Tool implements Model {
   
 
   public interface ListedByUserStep {
-    LocationStep listedByUser(String listedByUser);
-  }
-  
-
-  public interface LocationStep {
-    BuildStep location(String location);
+    BuildStep listedByUser(String listedByUser);
   }
   
 
   public interface BuildStep {
     Tool build();
     BuildStep id(String id);
+    BuildStep lat(String lat);
+    BuildStep lon(String lon);
     BuildStep borrowByUser(String borrowByUser);
     BuildStep s3imageKey(String s3imageKey);
     BuildStep isAvailable(Boolean isAvailable);
@@ -218,11 +232,12 @@ public final class Tool implements Model {
   }
   
 
-  public static class Builder implements ToolTypeStep, ListedByUserStep, LocationStep, BuildStep {
+  public static class Builder implements ToolTypeStep, ListedByUserStep, BuildStep {
     private String id;
     private ToolTypeEnum toolType;
     private String listedByUser;
-    private String location;
+    private String lat;
+    private String lon;
     private String borrowByUser;
     private String S3imageKey;
     private Boolean isAvailable;
@@ -236,7 +251,8 @@ public final class Tool implements Model {
           id,
           toolType,
           listedByUser,
-          location,
+          lat,
+          lon,
           borrowByUser,
           S3imageKey,
           isAvailable,
@@ -252,16 +268,21 @@ public final class Tool implements Model {
     }
     
     @Override
-     public LocationStep listedByUser(String listedByUser) {
+     public BuildStep listedByUser(String listedByUser) {
         Objects.requireNonNull(listedByUser);
         this.listedByUser = listedByUser;
         return this;
     }
     
     @Override
-     public BuildStep location(String location) {
-        Objects.requireNonNull(location);
-        this.location = location;
+     public BuildStep lat(String lat) {
+        this.lat = lat;
+        return this;
+    }
+    
+    @Override
+     public BuildStep lon(String lon) {
+        this.lon = lon;
         return this;
     }
     
@@ -307,11 +328,12 @@ public final class Tool implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, ToolTypeEnum toolType, String listedByUser, String location, String borrowByUser, String s3imageKey, Boolean isAvailable, Boolean openReturnRequest, Boolean openBorrowRequest) {
+    private CopyOfBuilder(String id, ToolTypeEnum toolType, String listedByUser, String lat, String lon, String borrowByUser, String s3imageKey, Boolean isAvailable, Boolean openReturnRequest, Boolean openBorrowRequest) {
       super.id(id);
       super.toolType(toolType)
         .listedByUser(listedByUser)
-        .location(location)
+        .lat(lat)
+        .lon(lon)
         .borrowByUser(borrowByUser)
         .s3imageKey(s3imageKey)
         .isAvailable(isAvailable)
@@ -330,8 +352,13 @@ public final class Tool implements Model {
     }
     
     @Override
-     public CopyOfBuilder location(String location) {
-      return (CopyOfBuilder) super.location(location);
+     public CopyOfBuilder lat(String lat) {
+      return (CopyOfBuilder) super.lat(lat);
+    }
+    
+    @Override
+     public CopyOfBuilder lon(String lon) {
+      return (CopyOfBuilder) super.lon(lon);
     }
     
     @Override
