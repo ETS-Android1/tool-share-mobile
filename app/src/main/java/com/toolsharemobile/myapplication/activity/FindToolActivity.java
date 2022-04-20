@@ -1,19 +1,24 @@
 package com.toolsharemobile.myapplication.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.toolsharemobile.myapplication.R;
@@ -30,6 +35,9 @@ public class FindToolActivity extends AppCompatActivity {
     ToolListingRecyclerViewAdapter adapter;
     BottomNavigationView bottomNavigationView;
     List<Tool> toolList = null;
+    FusedLocationProviderClient locationProviderClient = null;
+    String currentUserLat;
+    String currentUserLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +45,53 @@ public class FindToolActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_tool);
         toolList = new ArrayList<>();
 
+        setUpLocationServices();
         setUpFindToolRecyclerView();
         setUpNavBar();
+    }
+
+
+
+    public void setUpLocationServices(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+        locationProviderClient.getLastLocation().addOnSuccessListener(location ->
+                {
+                    if (location == null) {
+                        Log.e(TAG, "Location callback was null!");
+                    }
+
+                    currentUserLat = Double.toString(location.getLatitude());
+                    currentUserLon = Double.toString(location.getLongitude());
+                    Log.i(TAG, "Our latitude: " + location.getLatitude());
+                    Log.i(TAG, "Our longitude: " + location.getLongitude());
+                }
+        ).addOnCanceledListener(() ->
+        {
+            Log.e(TAG, "Location request was canceled!");
+        })
+                .addOnFailureListener(failure ->
+                {
+                    Log.e(TAG, "Location request failed! Error was: " + failure.getMessage(), failure.getCause());
+                })
+                .addOnCompleteListener(complete ->
+                {
+                    Log.e(TAG, "Location request completed!");
+
+                });
     }
 
     @SuppressLint("NotifyDataSetChanged")
