@@ -3,13 +3,17 @@ package com.toolsharemobile.myapplication.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.auth.AuthUser;
+import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
 import com.amplifyframework.datastore.generated.model.ToolTypeEnum;
@@ -20,7 +24,8 @@ public class CreateToolActivity extends AppCompatActivity {
 
     String TAG = " CREATE TOOL ACTIVITY";
     Spinner toolTypeSpinner = null;
-
+    AuthUser authUser;
+    String username;
 
 
     @Override
@@ -29,7 +34,23 @@ public class CreateToolActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_tool);
 
 
+        setUpCreateTool();
         setUpSpinners();
+
+    }
+
+
+    public void setUpCreateTool(){
+
+        if(Amplify.Auth.getCurrentUser() != null) {
+            authUser = Amplify.Auth.getCurrentUser();
+            username = authUser.getUsername();
+        }
+
+
+
+
+
 
 
         LinearLayout addTaskButton = findViewById(R.id.buttonAddToolSubmit);
@@ -40,7 +61,7 @@ public class CreateToolActivity extends AppCompatActivity {
 
             Tool newTool = Tool.builder()
                     .toolType((ToolTypeEnum)toolTypeSpinner.getSelectedItem())
-                    .listedByUser("Bob")
+                    .listedByUser(username)
                     .location("Bob Location")
                     .isAvailable(true)
                     .openReturnRequest(false)
@@ -51,7 +72,7 @@ public class CreateToolActivity extends AppCompatActivity {
             Amplify.API.mutate(
                     ModelMutation.create(newTool),
                     successResponse -> {
-                        Log.i(TAG, "Made a Tool successfully!");
+                        Log.i(TAG, username + ": Made a Tool successfully!");
                         Intent intent = new Intent(CreateToolActivity.this, ProfileActivity.class);
                         startActivity(intent);
 
@@ -63,11 +84,7 @@ public class CreateToolActivity extends AppCompatActivity {
                     }
             );
 
-
-
-
         });
-
     }
 
 
