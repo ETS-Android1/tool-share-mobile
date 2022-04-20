@@ -56,9 +56,11 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+
+
 //        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//        locationProvider = LocationServices.getFusedLocationProviderClient(getApplicationContext());
-//        locationProvider.flushLocations();
+
         toolListLended = new ArrayList<>();
         toolListBorrowed = new ArrayList<>();
 
