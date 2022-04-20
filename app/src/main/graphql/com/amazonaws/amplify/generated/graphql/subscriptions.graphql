@@ -4,7 +4,8 @@ subscription OnCreateTool {
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
@@ -19,7 +20,8 @@ subscription OnUpdateTool {
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
@@ -34,7 +36,8 @@ subscription OnDeleteTool {
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
