@@ -26,6 +26,7 @@ import java.util.List;
 public class FindToolActivity extends AppCompatActivity {
 
     private static final String TAG = "MESSAGE";
+    public static final String TOOL_ID_TAG = "Tool Id Tag";
     ToolListingRecyclerViewAdapter adapter;
     BottomNavigationView bottomNavigationView;
     List<Tool> toolList = null;
@@ -68,7 +69,7 @@ public class FindToolActivity extends AppCompatActivity {
 
         toolListRecyclerView.setLayoutManager(layoutManager);
 
-        adapter = new ToolListingRecyclerViewAdapter(toolList);
+        adapter = new ToolListingRecyclerViewAdapter(toolList, this);
         toolListRecyclerView.setAdapter(adapter);
 
     }

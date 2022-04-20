@@ -98,8 +98,10 @@ public class SignUpActivity extends AppCompatActivity {
                     AuthSignUpOptions.builder()
                             .userAttribute(AuthUserAttributeKey.email(), email)
                             .userAttribute(AuthUserAttributeKey.preferredUsername(), username)
+
 //                            .userAttribute(AuthUserAttributeKey.custom("lat"),lat)
 //                            .userAttribute(AuthUserAttributeKey.custom("lon"), lon)
+
                             .build(),
                     good -> {
                         Log.i(TAG, "Signup completed: " + good);

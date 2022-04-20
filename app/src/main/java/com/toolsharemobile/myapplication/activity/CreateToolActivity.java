@@ -5,14 +5,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.auth.AuthUser;
+import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
 import com.amplifyframework.datastore.generated.model.ToolTypeEnum;
@@ -29,6 +33,10 @@ public class CreateToolActivity extends AppCompatActivity {
     String lat = null;
     String lon = null;
 
+    AuthUser authUser;
+    String username;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +44,26 @@ public class CreateToolActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_tool);
 
 
+        setUpCreateTool();
         setUpSpinners();
+
+
+    }
+
+
+    public void setUpCreateTool(){
+
+        if(Amplify.Auth.getCurrentUser() != null) {
+            authUser = Amplify.Auth.getCurrentUser();
+            username = authUser.getUsername();
+        }
+
+
+
+
+
+
+
         LinearLayout addTaskButton = findViewById(R.id.buttonAddToolSubmit);
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         locationProvider = LocationServices.getFusedLocationProviderClient(getApplicationContext());
@@ -92,8 +119,13 @@ public class CreateToolActivity extends AppCompatActivity {
 
             Tool newTool = Tool.builder()
                     .toolType((ToolTypeEnum)toolTypeSpinner.getSelectedItem())
-                    .listedByUser("Bob")
+
+                    .listedByUser(username)
                     .location(lat + "," + lon)
+
+                    
+
+
                     .isAvailable(true)
                     .openReturnRequest(false)
                     .openBorrowRequest(false)
@@ -103,7 +135,7 @@ public class CreateToolActivity extends AppCompatActivity {
             Amplify.API.mutate(
                     ModelMutation.create(newTool),
                     successResponse -> {
-                        Log.i(TAG, "Made a Tool successfully!");
+                        Log.i(TAG, username + ": Made a Tool successfully!");
                         Intent intent = new Intent(CreateToolActivity.this, ProfileActivity.class);
                         startActivity(intent);
 
@@ -115,11 +147,7 @@ public class CreateToolActivity extends AppCompatActivity {
                     }
             );
 
-
-
-
         });
-
     }
 
 

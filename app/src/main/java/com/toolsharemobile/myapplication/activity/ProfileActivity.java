@@ -16,6 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
+
+import com.amplifyframework.auth.AuthUser;
+
 import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
@@ -25,6 +28,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.toolsharemobile.myapplication.R;
+import com.toolsharemobile.myapplication.adapter.BorrowToolRecyclerViewAdapter;
+import com.toolsharemobile.myapplication.adapter.LendToolRecyclerViewAdapter;
 import com.toolsharemobile.myapplication.adapter.ToolListingRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -35,10 +40,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "PROFILE";
     BottomNavigationView bottomNavigationView;
-    ToolListingRecyclerViewAdapter adapterLendTool;
-    ToolListingRecyclerViewAdapter adapterBorrowTool;
+    LendToolRecyclerViewAdapter adapterLendTool;
+    BorrowToolRecyclerViewAdapter adapterBorrowTool;
     List<Tool> toolListLended = null;
     List<Tool> toolListBorrowed = null;
+    AuthUser authUser;
+    String username;
 
 //    FusedLocationProviderClient locationProvider = null;
 //    String lat = null;
@@ -55,14 +62,15 @@ public class ProfileActivity extends AppCompatActivity {
         toolListLended = new ArrayList<>();
         toolListBorrowed = new ArrayList<>();
 
-        setUpLendToolRecyclerView();
-        setUpBorrowToolRecyclerView();
+
+        setUpAuthUser();
         setUpCreateToolNavigation();
 //        setupSetLocationButton();
         setUpNavBar();
-
-
+        setUpLendToolRecyclerView();
+        setUpBorrowToolRecyclerView();
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -72,12 +80,16 @@ public class ProfileActivity extends AppCompatActivity {
         Amplify.API.query(
                 ModelQuery.list(Tool.class),
                 success -> {
-                    Log.i(TAG, "Updated Lended Tools Successfully!");
-                    toolListLended.clear();
+                    Log.i(TAG, "Updated Borrowed Tools Successfully!");
+                    toolListBorrowed.clear();
                     for (Tool databaseTool : success.getData()) {
-                        toolListLended.add(databaseTool);
+                        if(databaseTool.getBorrowByUser() != null) {
+                            if (databaseTool.getBorrowByUser().equals(username)) {
+                                toolListBorrowed.add(databaseTool);
+                            }
+                        }
                     }
-                    runOnUiThread(() -> adapterLendTool.notifyDataSetChanged());
+                    runOnUiThread(() -> adapterBorrowTool.notifyDataSetChanged());
                 },
 
                 failure -> Log.i(TAG, "failed with this response: ")
@@ -87,16 +99,17 @@ public class ProfileActivity extends AppCompatActivity {
                 ModelQuery.list(Tool.class),
                 success -> {
                     Log.i(TAG, "Updated Lended Tools Successfully!");
-                    toolListBorrowed.clear();
+                    toolListLended.clear();
                     for (Tool databaseTool : success.getData()) {
-                        toolListBorrowed.add(databaseTool);
+                        if (databaseTool.getListedByUser().equals(username)) {
+                            toolListLended.add(databaseTool);
+                        }
                     }
-                    runOnUiThread(() -> adapterBorrowTool.notifyDataSetChanged());
+                    runOnUiThread(() -> adapterLendTool.notifyDataSetChanged());
                 },
 
                 failure -> Log.i(TAG, "failed with this response: ")
         );
-
 
     }
 
@@ -157,14 +170,15 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
+
     private void setUpLendToolRecyclerView() {
 
         RecyclerView toolListRecyclerView = findViewById(R.id.recyclerViewToolsLended);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         toolListRecyclerView.setLayoutManager(layoutManager);
 
-        adapterLendTool = new ToolListingRecyclerViewAdapter(toolListLended);
+        adapterLendTool = new LendToolRecyclerViewAdapter(toolListLended, this);
         toolListRecyclerView.setAdapter(adapterLendTool);
 
 
@@ -173,13 +187,20 @@ public class ProfileActivity extends AppCompatActivity {
     private void setUpBorrowToolRecyclerView() {
 
         RecyclerView toolListRecyclerView = findViewById(R.id.recyclerViewToolsBorrowed);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         toolListRecyclerView.setLayoutManager(layoutManager);
 
-        adapterBorrowTool = new ToolListingRecyclerViewAdapter(toolListBorrowed);
+        adapterBorrowTool = new BorrowToolRecyclerViewAdapter(toolListBorrowed, this);
         toolListRecyclerView.setAdapter(adapterBorrowTool);
 
+    }
+
+    public void setUpAuthUser(){
+        if(Amplify.Auth.getCurrentUser() != null) {
+            authUser = Amplify.Auth.getCurrentUser();
+            username = authUser.getUsername();
+        }
     }
 
 
@@ -200,12 +221,12 @@ public class ProfileActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 }
-                else if (id == R.id.bnm_profile) {
-
-                    Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
+//                else if (id == R.id.bnm_profile) {
+//
+//                    Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
+//                    startActivity(intent);
+//                    return true;
+//                }
                 else if (id == R.id.bnm_findTools) {
 
                     Intent intent = new Intent(ProfileActivity.this, FindToolActivity.class);
