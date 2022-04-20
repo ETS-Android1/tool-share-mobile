@@ -111,7 +111,8 @@ public class CreateToolActivity extends AppCompatActivity {
                     .toolType((ToolTypeEnum) toolTypeSpinner.getSelectedItem())
 
                     .listedByUser(username)
-                    .location(lat + "," + lon)
+                    .lat(lat)
+                    .lon(lon)
                     .isAvailable(true)
                     .openReturnRequest(false)
                     .openBorrowRequest(false)
