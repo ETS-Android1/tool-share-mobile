@@ -6,26 +6,38 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_bg"
     tools:context=".activity.FindToolActivity">
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_marginStart="24dp"
+        android:layout_margin="20dp"
         android:text="Find a Tool"
 
         android:textColor="@color/white"
-        android:textSize="44sp"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFindTool"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="100dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
         android:layout_height="wrap_content"
-        >
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginTop="120dp"
+        android:background="@drawable/ic_curve_bg"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFindTool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
@@ -54,7 +66,6 @@
         android:backgroundTint="@color/main_green"
         android:src="@android:drawable/ic_input_add"
         app:layout_anchor="@id/bottomAppBar" />
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

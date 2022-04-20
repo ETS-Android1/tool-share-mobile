@@ -1,7 +1,9 @@
 package com.toolsharemobile.myapplication.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -9,26 +11,53 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Tool;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.toolsharemobile.myapplication.R;
+import com.toolsharemobile.myapplication.adapter.ToolListingRecyclerViewAdapter;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class FindToolActivity extends AppCompatActivity {
 
-    //ToolListingRecyclerViewAdapter adapter;
+    private static final String TAG = "MESSAGE";
+    ToolListingRecyclerViewAdapter adapter;
     BottomNavigationView bottomNavigationView;
+    List<Tool> toolList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_tool);
+        toolList = new ArrayList<>();
 
         setUpFindToolRecyclerView();
         setUpNavBar();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Amplify.API.query(
+                ModelQuery.list(Tool.class),
+                success -> {
+                    Log.i(TAG, "Updated Tools Successfully!");
+                    toolList.clear();
+                    for (Tool databaseTool : success.getData()) {
+                        toolList.add(databaseTool);
+                    }
+                    runOnUiThread(() -> adapter.notifyDataSetChanged());
+                },
+
+                failure -> Log.i(TAG, "failed with this response: ")
+        );
     }
 
 
@@ -39,23 +68,8 @@ public class FindToolActivity extends AppCompatActivity {
 
         toolListRecyclerView.setLayoutManager(layoutManager);
 
-
-//        Tool crowBar = new Tool("CrowBar");
-//        Tool wrench = new Tool("Wrench");
-//        Tool vaccum = new Tool("Vaccum");
-//        Tool ladder = new Tool("Ladder");
-
-
-        //List<Tool> toolList = new ArrayList<>();
-
-//        toolList.add(crowBar);
-//        toolList.add(wrench);
-//        toolList.add(vaccum);
-//        toolList.add(ladder);
-
-
-//        adapter = new ToolListingRecyclerViewAdapter(toolList);
-//        toolListRecyclerView.setAdapter(adapter);
+        adapter = new ToolListingRecyclerViewAdapter(toolList);
+        toolListRecyclerView.setAdapter(adapter);
 
     }
 

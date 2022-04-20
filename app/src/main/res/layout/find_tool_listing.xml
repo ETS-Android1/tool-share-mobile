@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="30dp"
+    android:layout_margin="10dp"
     android:outlineAmbientShadowColor="@color/main_green"
     android:outlineSpotShadowColor="@color/main_green"
     app:cardCornerRadius="8dp"
@@ -23,9 +23,10 @@
             android:layout_height="wrap_content"
             android:elevation="30dp"
 
+            android:layout_margin="10dp"
             android:text="Find a Tool Listing"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

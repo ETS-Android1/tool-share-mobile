@@ -53,12 +53,12 @@
             android:textSize="20dp" />
 
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/recyclerViewToolsLended"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:layout_margin="20dp"-->
-<!--            android:layout_marginTop="20dp" />-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewToolsLended"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="20dp"
+            android:layout_marginTop="20dp" />
 
         <TextView
             android:id="@+id/textView6"
@@ -70,13 +70,13 @@
             android:textSize="20dp" />
 
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/recyclerViewToolsBorrowed"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:layout_margin="20dp"-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewToolsBorrowed"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="20dp"
 
-<!--            android:layout_marginTop="20dp" />-->
+            android:layout_marginTop="20dp" />
 
     </LinearLayout>
 

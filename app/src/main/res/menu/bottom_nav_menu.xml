@@ -17,4 +17,11 @@
         android:icon="@android:drawable/ic_menu_manage"
         android:title="Settings" />
 
+    <item
+        android:id="@+id/bnm_developers"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Developers" />
+
+
+
 </menu>
