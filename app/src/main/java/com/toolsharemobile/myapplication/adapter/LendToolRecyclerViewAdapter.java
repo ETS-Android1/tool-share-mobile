@@ -45,8 +45,17 @@ public class LendToolRecyclerViewAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         TextView textViewToolName = holder.itemView.findViewById(R.id.textViewFindToolName);
+        TextView pendingTextView = holder.itemView.findViewById(R.id.pendingTextView);
+
         textViewToolName.setText(toolList.get(position).getToolType().toString());
         Tool tool = toolList.get(position);
+
+            pendingTextView.setVisibility(View.INVISIBLE);
+            if (tool.getOpenBorrowRequest() == true || tool.getOpenReturnRequest() == true) {
+                pendingTextView.setVisibility(View.VISIBLE);
+            }
+
+
 
 
 

@@ -53,22 +53,22 @@ public class ViewToolListingActivity extends AppCompatActivity {
                     username = authUser.getUsername();
 
 
-                    Amplify.Auth.fetchUserAttributes(
-                            success ->
-                            {
-                                Log.i(TAG, "Fetch user attributes succeeded for username: " + username);
-
-                                for (AuthUserAttribute userAttribute : success) {
-                                    if (userAttribute.getKey().getKeyString().equals("preferred_username")) {
-                                        username = userAttribute.getValue();
-                                    }
-                                }
-                            },
-                            failure ->
-                            {
-                                Log.i(TAG, "Fetch user attributes failed: " + failure.toString());
-                            }
-                    );
+//                    Amplify.Auth.fetchUserAttributes(
+//                            success ->
+//                            {
+//                                Log.i(TAG, "Fetch user attributes succeeded for username: " + username);
+//
+//                                for (AuthUserAttribute userAttribute : success) {
+//                                    if (userAttribute.getKey().getKeyString().equals("preferred_username")) {
+//                                        username = userAttribute.getValue();
+//                                    }
+//                                }
+//                            },
+//                            failure ->
+//                            {
+//                                Log.i(TAG, "Fetch user attributes failed: " + failure.toString());
+//                            }
+//                    );
                 } else {
                     username = "Jimbo";
                 }
@@ -78,7 +78,7 @@ public class ViewToolListingActivity extends AppCompatActivity {
                         .listedByUser(toolToEdit.getListedByUser())
                         .location(toolToEdit.getLocation())
                         .id(toolToEdit.getId())
-                        .openBorrowRequest(false)
+                        .openBorrowRequest(true)
                         .openReturnRequest(false)
                         .isAvailable(false)
                         .borrowByUser(username)

@@ -133,4 +133,9 @@ public class ViewLendedToolActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public void setUpConfirmBorrowButton(){
+
+    }
 }
