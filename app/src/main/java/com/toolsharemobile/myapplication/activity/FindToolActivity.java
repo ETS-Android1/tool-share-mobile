@@ -63,13 +63,13 @@ public class FindToolActivity extends AppCompatActivity {
 //        setUpSpinners();
         setUpLocationServices();
         filterToolType();
+        filterByDistance();
         setUpFindToolRecyclerView();
         setUpNavBar();
     }
 
 
-
-    public void setUpLocationServices(){
+    public void setUpLocationServices() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -122,8 +122,8 @@ public class FindToolActivity extends AppCompatActivity {
                     Log.i(TAG, "Updated Tools Successfully!");
                     toolList.clear();
                     for (Tool databaseTool : success.getData()) {
-                        if(!databaseTool.getListedByUser().equals(username))
-                        toolList.add(databaseTool);
+                        if (!databaseTool.getListedByUser().equals(username))
+                            toolList.add(databaseTool);
                     }
                     runOnUiThread(() -> adapter.notifyDataSetChanged());
                 },
@@ -181,9 +181,7 @@ public class FindToolActivity extends AppCompatActivity {
     }
 
 
-
-
-    public void filterToolType(){
+    public void filterToolType() {
         toolTypeSpinner = findViewById(R.id.spinnerFilterToolType);
 
         toolTypeSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.preference_category, ToolTypeEnum.values()));
@@ -199,7 +197,7 @@ public class FindToolActivity extends AppCompatActivity {
                         toolList.clear();
                         for (Tool databaseTool : success.getData()) {
                             if (databaseTool.getToolType().equals((ToolTypeEnum) toolTypeSpinner.getSelectedItem()))
-                            toolList.add(databaseTool);
+                                toolList.add(databaseTool);
                         }
                         runOnUiThread(() -> adapter.notifyDataSetChanged());
                     },
@@ -231,6 +229,38 @@ public class FindToolActivity extends AppCompatActivity {
     }
 
 
+    public void filterByDistance() {
+
+
+        Button buttonFilterByDistance = findViewById(R.id.buttonFilterByDistanceLatLon);
+
+
+        buttonFilterByDistance.setOnClickListener(view -> {
+
+            List<Tool> filterBYDistance = new ArrayList<>();
+            for (Tool tool : toolList) {
+
+                double distanceToCalc = latLongDist(currentUserLat, currentUserLon, Double.parseDouble(tool.getLat()), Double.parseDouble(tool.getLon()));
+
+                System.out.println(distanceToCalc);
+
+
+//            Tool newTool = Tool.builder()
+//                    .toolType(tool.getToolType())
+//                    .listedByUser(tool.getListedByUser())
+//                    .lat(tool.getLat())
+//                    .lon(tool.getLon())
+//                    .distance()
+//                    .build();
+
+
+            }
+        });
+
+
+    }
+
+
     public static double latLongDist(double lat1, double lng1, double lat2, double lng2) {
         double earthRadius = 6371000; //meters
         double dLat = Math.toRadians(lat2 - lat1);
@@ -244,4 +274,6 @@ public class FindToolActivity extends AppCompatActivity {
 
         return distMiles;
     }
+
+
 }
