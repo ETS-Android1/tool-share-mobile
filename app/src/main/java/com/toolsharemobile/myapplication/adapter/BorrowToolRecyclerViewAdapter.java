@@ -48,7 +48,10 @@ public class BorrowToolRecyclerViewAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         TextView textViewToolName = holder.itemView.findViewById(R.id.textViewFindToolName);
+        TextView textViewToolUser = holder.itemView.findViewById(R.id.textViewFindToolUser);
         textViewToolName.setText(toolList.get(position).getToolType().toString());
+        textViewToolUser.setText(toolList.get(position).getListedByUser());
+
         Tool tool = toolList.get(position);
 
 
@@ -57,6 +60,7 @@ public class BorrowToolRecyclerViewAdapter extends RecyclerView.Adapter {
 
         if (tool.getOpenBorrowRequest() == true || tool.getOpenReturnRequest() == true) {
             pendingTextView.setVisibility(View.VISIBLE);
+            holder.itemView.setBackgroundResource(R.drawable.yellow);
         }
 
         ImageView imageViewToolIcon = holder.itemView.findViewById(R.id.imageViewToolIcon);

@@ -27,6 +27,7 @@ import com.amplifyframework.datastore.generated.model.ToolTypeEnum;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 import com.toolsharemobile.myapplication.R;
@@ -71,6 +72,7 @@ public class FindToolActivity extends AppCompatActivity {
         filterByDistance();
         setUpFindToolRecyclerView();
         setUpNavBar();
+        setUpCreateToolNavigation();
     }
 
 
@@ -231,6 +233,20 @@ public class FindToolActivity extends AppCompatActivity {
                 );
             }
         });
+    }
+
+    public void setUpCreateToolNavigation(){
+
+        FloatingActionButton floatingActionButton = findViewById(R.id.fabHome);
+
+        floatingActionButton.setOnClickListener(view -> {
+            Intent intent = new Intent(FindToolActivity.this, CreateToolActivity.class);
+            startActivity(intent);
+
+        });
+
+
+
     }
 
 
