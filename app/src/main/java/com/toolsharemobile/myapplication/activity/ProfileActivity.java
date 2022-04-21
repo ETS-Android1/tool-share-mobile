@@ -181,6 +181,11 @@ public class ProfileActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 }
+                else if (id == R.id.bnm_developers) {
+                    Intent intent = new Intent(ProfileActivity. this, DevActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
 
 
                 return false;
