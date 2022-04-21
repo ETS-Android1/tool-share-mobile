@@ -44,7 +44,11 @@ public class ToolListingRecyclerViewAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         TextView textViewToolName = holder.itemView.findViewById(R.id.textViewFindToolName);
+        TextView pendingTextView = holder.itemView.findViewById(R.id.pendingTextView);
         textViewToolName.setText(toolList.get(position).getToolType().toString());
+
+        pendingTextView.setVisibility(View.INVISIBLE);
+
         ImageView imageViewToolIcon = holder.itemView.findViewById(R.id.imageViewToolIcon);
 
         if (toolList.get(position).getToolType().equals(ToolTypeEnum.CROWBAR)) imageViewToolIcon.setImageResource(R.drawable.crowbar);
@@ -54,8 +58,8 @@ public class ToolListingRecyclerViewAdapter extends RecyclerView.Adapter{
         if (toolList.get(position).getToolType().equals(ToolTypeEnum.JIGSAW)) imageViewToolIcon.setImageResource(R.drawable.jigsaw);
 
 
-        Tool tool = toolList.get(position);
 
+        Tool tool = toolList.get(position);
 
         View toolViewHolder = holder.itemView;
         toolViewHolder.setOnClickListener(view -> {

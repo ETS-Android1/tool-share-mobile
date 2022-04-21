@@ -65,10 +65,6 @@ public class LendToolRecyclerViewAdapter extends RecyclerView.Adapter{
                 pendingTextView.setVisibility(View.VISIBLE);
             }
 
-
-
-
-
         View toolViewHolder = holder.itemView;
         toolViewHolder.setOnClickListener(view -> {
             Intent goToViewToolListingIntent = new Intent(callingActivity, ViewLendedToolActivity.class);

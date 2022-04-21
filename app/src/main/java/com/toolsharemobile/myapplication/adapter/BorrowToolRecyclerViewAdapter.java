@@ -51,6 +51,13 @@ public class BorrowToolRecyclerViewAdapter extends RecyclerView.Adapter {
         textViewToolName.setText(toolList.get(position).getToolType().toString());
         Tool tool = toolList.get(position);
 
+
+        TextView pendingTextView = holder.itemView.findViewById(R.id.pendingTextView);
+        pendingTextView.setVisibility(View.INVISIBLE);
+        if (tool.getOpenBorrowRequest() == true || tool.getOpenReturnRequest() == true) {
+            pendingTextView.setVisibility(View.VISIBLE);
+        }
+
         ImageView imageViewToolIcon = holder.itemView.findViewById(R.id.imageViewToolIcon);
 
 
@@ -59,6 +66,7 @@ public class BorrowToolRecyclerViewAdapter extends RecyclerView.Adapter {
         if (toolList.get(position).getToolType().equals(ToolTypeEnum.DRILL)) imageViewToolIcon.setImageResource(R.drawable.drill);
         if (toolList.get(position).getToolType().equals(ToolTypeEnum.CIRCULARSAW)) imageViewToolIcon.setImageResource(R.drawable.circular_saw);
         if (toolList.get(position).getToolType().equals(ToolTypeEnum.JIGSAW)) imageViewToolIcon.setImageResource(R.drawable.jigsaw);
+
 
 
 
