@@ -3,13 +3,18 @@ package com.toolsharemobile.myapplication.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.amplifyframework.auth.AuthUser;
+import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
+import com.google.android.material.textfield.TextInputLayout;
 import com.toolsharemobile.myapplication.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,9 +28,84 @@ public class LoginActivity extends AppCompatActivity {
 
 
         loginLoginButtonSetUp();
+        logoutButtonSetup();
         setUpButtonToSignUp();
 
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        AuthUser currentUser = Amplify.Auth.getCurrentUser();
+        String preferredUserName = "";
+        LinearLayout buttonLoginSubmit = findViewById(R.id.buttonLoginSubmit);
+        LinearLayout buttonLogout = findViewById(R.id.buttonLogout);
+        LinearLayout buttonLoginToSignUp = findViewById(R.id.buttonLoginToSignUp);
+        TextInputLayout editText = findViewById(R.id.editText);
+        TextInputLayout editText2 = findViewById(R.id.editText2);
+        EditText loginTextEmailAddress = findViewById(R.id.loginTextEmailAddress);
+        EditText loginTextPassword = findViewById(R.id.loginTextPassword);
+
+        if(currentUser == null){
+            buttonLoginSubmit.setVisibility(View.VISIBLE);
+            buttonLoginToSignUp.setVisibility(View.VISIBLE);
+            editText.setVisibility(View.VISIBLE);
+            editText2.setVisibility(View.VISIBLE);
+            loginTextEmailAddress.setVisibility(View.VISIBLE);
+            loginTextPassword.setVisibility(View.VISIBLE);
+            buttonLogout.setVisibility(View.INVISIBLE);
+        } else {
+            Log.i(TAG, "onCreate: Username:  " + preferredUserName);
+            buttonLoginSubmit.setVisibility(View.INVISIBLE);
+            buttonLoginToSignUp.setVisibility(View.INVISIBLE);
+            editText.setVisibility(View.INVISIBLE);
+            editText2.setVisibility(View.INVISIBLE);
+            loginTextEmailAddress.setVisibility(View.INVISIBLE);
+            loginTextPassword.setVisibility(View.INVISIBLE);
+            buttonLogout.setVisibility(View.VISIBLE);
+
+
+            Amplify.Auth.fetchUserAttributes(
+                    success ->
+                    {
+                        for (AuthUserAttribute userInfo : success) {
+                            if (userInfo.getKey().getKeyString().equals("preferred_username")) {
+                                String usersName = userInfo.getValue();
+                                runOnUiThread(() -> {
+                                    ((TextView) findViewById(R.id.textView)).setText("Hi "+usersName+"!");
+                                });
+
+
+                            }
+                        }
+                    },
+                    failure -> {
+                        Log.i(TAG, "onCreate: Username not found : " + failure);
+                    }
+            );
+        }
+    }
+
+    public void logoutButtonSetup(){
+        LinearLayout buttonLogout = findViewById(R.id.buttonLogout);
+        buttonLogout.setOnClickListener(view -> {
+            System.out.println("LogoutButton!");
+            Log.e(TAG, "onClick: Logout Button!");
+            Amplify.Auth.signOut(
+                    () -> {
+                        Log.i(TAG, "Logout completed: ");
+                        Intent goToLoginIntent = new Intent(LoginActivity.this, LoginActivity.class);
+                        LoginActivity.this.startActivity(goToLoginIntent);
+                    },
+                    failure -> {
+                        Log.i(TAG, "Logout not completed: " + failure.toString());
+                    }
+            );
+        });
+    }
+
+
 
     public void loginLoginButtonSetUp(){
         LinearLayout buttonLoginSubmit = findViewById(R.id.buttonLoginSubmit);
@@ -58,23 +138,17 @@ public class LoginActivity extends AppCompatActivity {
 
             );
 
-
-
-            //TODO Add Login
-
         });
     }
 
 
     public void setUpButtonToSignUp(){
 
-
         LinearLayout buttonToSignUp = findViewById(R.id.buttonLoginToSignUp);
 
         buttonToSignUp.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
-
 
 
         });

@@ -30,21 +30,23 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
         signupButtonSetUp();
 
+
     }
+
+
     public void signupButtonSetUp(){
         LinearLayout buttonSignUpToVerify = findViewById(R.id.buttonSignUpToVerify);
         buttonSignUpToVerify.setOnClickListener(view -> {
             System.out.println("Signup signup Button!");
             Log.e(TAG, "onClick: Signup signup Button!");
+            String confirmPassword = ((EditText) findViewById(R.id.editTextTextPasswordConfirm)).getText().toString();
+
 
             String email = ((EditText) findViewById(R.id.signupTextEmailAddress)).getText().toString();
             String password = ((EditText) findViewById(R.id.signupTextPassword)).getText().toString();
-            String confirmPassword = ((EditText) findViewById(R.id.editTextTextPasswordConfirm)).getText().toString();
             String username = ((EditText) findViewById(R.id.signupTextUserame)).getText().toString();
-
 
 
 
