@@ -35,6 +35,7 @@ public final class Tool implements Model {
   public static final QueryField IS_AVAILABLE = field("Tool", "isAvailable");
   public static final QueryField OPEN_RETURN_REQUEST = field("Tool", "openReturnRequest");
   public static final QueryField OPEN_BORROW_REQUEST = field("Tool", "openBorrowRequest");
+  public static final QueryField DISTANCE = field("Tool", "distance");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="ToolTypeEnum", isRequired = true) ToolTypeEnum toolType;
   private final @ModelField(targetType="String", isRequired = true) String listedByUser;
@@ -45,6 +46,7 @@ public final class Tool implements Model {
   private final @ModelField(targetType="Boolean") Boolean isAvailable;
   private final @ModelField(targetType="Boolean") Boolean openReturnRequest;
   private final @ModelField(targetType="Boolean") Boolean openBorrowRequest;
+  private final @ModelField(targetType="Float") Double distance;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
@@ -87,6 +89,10 @@ public final class Tool implements Model {
       return openBorrowRequest;
   }
   
+  public Double getDistance() {
+      return distance;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -95,7 +101,7 @@ public final class Tool implements Model {
       return updatedAt;
   }
   
-  private Tool(String id, ToolTypeEnum toolType, String listedByUser, String lat, String lon, String borrowByUser, String S3imageKey, Boolean isAvailable, Boolean openReturnRequest, Boolean openBorrowRequest) {
+  private Tool(String id, ToolTypeEnum toolType, String listedByUser, String lat, String lon, String borrowByUser, String S3imageKey, Boolean isAvailable, Boolean openReturnRequest, Boolean openBorrowRequest, Double distance) {
     this.id = id;
     this.toolType = toolType;
     this.listedByUser = listedByUser;
@@ -106,6 +112,7 @@ public final class Tool implements Model {
     this.isAvailable = isAvailable;
     this.openReturnRequest = openReturnRequest;
     this.openBorrowRequest = openBorrowRequest;
+    this.distance = distance;
   }
   
   @Override
@@ -126,6 +133,7 @@ public final class Tool implements Model {
               ObjectsCompat.equals(getIsAvailable(), tool.getIsAvailable()) &&
               ObjectsCompat.equals(getOpenReturnRequest(), tool.getOpenReturnRequest()) &&
               ObjectsCompat.equals(getOpenBorrowRequest(), tool.getOpenBorrowRequest()) &&
+              ObjectsCompat.equals(getDistance(), tool.getDistance()) &&
               ObjectsCompat.equals(getCreatedAt(), tool.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), tool.getUpdatedAt());
       }
@@ -144,6 +152,7 @@ public final class Tool implements Model {
       .append(getIsAvailable())
       .append(getOpenReturnRequest())
       .append(getOpenBorrowRequest())
+      .append(getDistance())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -164,6 +173,7 @@ public final class Tool implements Model {
       .append("isAvailable=" + String.valueOf(getIsAvailable()) + ", ")
       .append("openReturnRequest=" + String.valueOf(getOpenReturnRequest()) + ", ")
       .append("openBorrowRequest=" + String.valueOf(getOpenBorrowRequest()) + ", ")
+      .append("distance=" + String.valueOf(getDistance()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -193,6 +203,7 @@ public final class Tool implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -207,7 +218,8 @@ public final class Tool implements Model {
       S3imageKey,
       isAvailable,
       openReturnRequest,
-      openBorrowRequest);
+      openBorrowRequest,
+      distance);
   }
   public interface ToolTypeStep {
     ListedByUserStep toolType(ToolTypeEnum toolType);
@@ -229,6 +241,7 @@ public final class Tool implements Model {
     BuildStep isAvailable(Boolean isAvailable);
     BuildStep openReturnRequest(Boolean openReturnRequest);
     BuildStep openBorrowRequest(Boolean openBorrowRequest);
+    BuildStep distance(Double distance);
   }
   
 
@@ -243,6 +256,7 @@ public final class Tool implements Model {
     private Boolean isAvailable;
     private Boolean openReturnRequest;
     private Boolean openBorrowRequest;
+    private Double distance;
     @Override
      public Tool build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -257,7 +271,8 @@ public final class Tool implements Model {
           S3imageKey,
           isAvailable,
           openReturnRequest,
-          openBorrowRequest);
+          openBorrowRequest,
+          distance);
     }
     
     @Override
@@ -316,6 +331,12 @@ public final class Tool implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep distance(Double distance) {
+        this.distance = distance;
+        return this;
+    }
+    
     /** 
      * @param id id
      * @return Current Builder instance, for fluent method chaining
@@ -328,7 +349,7 @@ public final class Tool implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, ToolTypeEnum toolType, String listedByUser, String lat, String lon, String borrowByUser, String s3imageKey, Boolean isAvailable, Boolean openReturnRequest, Boolean openBorrowRequest) {
+    private CopyOfBuilder(String id, ToolTypeEnum toolType, String listedByUser, String lat, String lon, String borrowByUser, String s3imageKey, Boolean isAvailable, Boolean openReturnRequest, Boolean openBorrowRequest, Double distance) {
       super.id(id);
       super.toolType(toolType)
         .listedByUser(listedByUser)
@@ -338,7 +359,8 @@ public final class Tool implements Model {
         .s3imageKey(s3imageKey)
         .isAvailable(isAvailable)
         .openReturnRequest(openReturnRequest)
-        .openBorrowRequest(openBorrowRequest);
+        .openBorrowRequest(openBorrowRequest)
+        .distance(distance);
     }
     
     @Override
@@ -384,6 +406,11 @@ public final class Tool implements Model {
     @Override
      public CopyOfBuilder openBorrowRequest(Boolean openBorrowRequest) {
       return (CopyOfBuilder) super.openBorrowRequest(openBorrowRequest);
+    }
+    
+    @Override
+     public CopyOfBuilder distance(Double distance) {
+      return (CopyOfBuilder) super.distance(distance);
     }
   }
   
