@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
-import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
 import com.google.android.material.snackbar.Snackbar;
@@ -38,7 +37,7 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
         toolCompletableFuture = new CompletableFuture<>();
 
         setUpUIelements();
-        setUpBorrowButton();
+        setUpReturnRequestButton();
     }
 
 
@@ -103,7 +102,7 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
 
 
 
-    private void setUpBorrowButton() {
+    private void setUpReturnRequestButton() {
         Button borrowToolButton = findViewById(R.id.returnToolSubmitButton);
 
         borrowToolButton.setOnClickListener(new View.OnClickListener() {
@@ -123,22 +122,22 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
                         .lon(toolToEdit.getLon())
                         .id(toolToEdit.getId())
                         .openBorrowRequest(false)
-                        .openReturnRequest(false)
-                        .isAvailable(true)
-                        .borrowByUser(null)
+                        .openReturnRequest(true)
+                        .isAvailable(false)
+                        .borrowByUser(toolToEdit.getBorrowByUser())
                         .build();
 
                 Amplify.API.mutate(
                         ModelMutation.update(toolToSave),
                         successResponse -> {
-                            Log.i(TAG, "Returned a tool successfully!");
+                            Log.i(TAG, "Created a tool return request successfully!");
 
                             Intent goToHomeActivity = new Intent(ViewBorrowedToolActivity.this, ProfileActivity.class);
                             startActivity(goToHomeActivity);
                         },
                         failureResponse -> {
-                            Log.i(TAG, "Failed to return tool with this response: "+ failureResponse);
-                            Snackbar.make(findViewById(R.id.viewToolActivity), "Tool not returned!", Snackbar.LENGTH_SHORT).show();
+                            Log.i(TAG, "Failed to make a tool return request: "+ failureResponse);
+                            Snackbar.make(findViewById(R.id.viewToolActivity), "tool return request failed!", Snackbar.LENGTH_SHORT).show();
                         }
                 );
 
