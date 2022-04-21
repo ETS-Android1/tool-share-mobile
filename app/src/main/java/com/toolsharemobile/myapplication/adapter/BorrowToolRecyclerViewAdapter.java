@@ -49,7 +49,11 @@ public class BorrowToolRecyclerViewAdapter extends RecyclerView.Adapter {
         textViewToolName.setText(toolList.get(position).getToolType().toString());
         Tool tool = toolList.get(position);
 
-
+        TextView pendingTextView = holder.itemView.findViewById(R.id.pendingTextView);
+        pendingTextView.setVisibility(View.INVISIBLE);
+        if (tool.getOpenBorrowRequest() == true || tool.getOpenReturnRequest() == true) {
+            pendingTextView.setVisibility(View.VISIBLE);
+        }
 
         View toolViewHolder = holder.itemView;
         toolViewHolder.setOnClickListener(view -> {

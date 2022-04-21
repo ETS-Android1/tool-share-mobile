@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -187,7 +188,6 @@ public class FindToolActivity extends AppCompatActivity {
 
         toolTypeSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.preference_category, ToolTypeEnum.values()));
 
-
         Button buttonFilterByDistance = findViewById(R.id.buttonFilterByDistance);
 
         buttonFilterByDistance.setOnClickListener(view -> {
@@ -206,8 +206,27 @@ public class FindToolActivity extends AppCompatActivity {
 
                     failure -> Log.i(TAG, "failed with this response: ")
             );
+        });
 
+        Button resetFilter = findViewById(R.id.filterResetButton);
+        resetFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Amplify.API.query(
+                        ModelQuery.list(Tool.class),
+                        success -> {
+                            Log.i(TAG, "Updated Tools Successfully!");
+                            toolList.clear();
+                            for (Tool databaseTool : success.getData()) {
+                                if(!databaseTool.getListedByUser().equals(username))
+                                    toolList.add(databaseTool);
+                            }
+                            runOnUiThread(() -> adapter.notifyDataSetChanged());
+                        },
 
+                        failure -> Log.i(TAG, "failed with this response: ")
+                );
+            }
         });
     }
 

@@ -42,9 +42,10 @@ public class ToolListingRecyclerViewAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         TextView textViewToolName = holder.itemView.findViewById(R.id.textViewFindToolName);
+        TextView pendingTextView = holder.itemView.findViewById(R.id.pendingTextView);
         textViewToolName.setText(toolList.get(position).getToolType().toString());
+        pendingTextView.setVisibility(View.INVISIBLE);
         Tool tool = toolList.get(position);
-
 
         View toolViewHolder = holder.itemView;
         toolViewHolder.setOnClickListener(view -> {
