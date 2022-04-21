@@ -52,23 +52,6 @@ public class ViewToolListingActivity extends AppCompatActivity {
                     authUser = Amplify.Auth.getCurrentUser();
                     username = authUser.getUsername();
 
-
-//                    Amplify.Auth.fetchUserAttributes(
-//                            success ->
-//                            {
-//                                Log.i(TAG, "Fetch user attributes succeeded for username: " + username);
-//
-//                                for (AuthUserAttribute userAttribute : success) {
-//                                    if (userAttribute.getKey().getKeyString().equals("preferred_username")) {
-//                                        username = userAttribute.getValue();
-//                                    }
-//                                }
-//                            },
-//                            failure ->
-//                            {
-//                                Log.i(TAG, "Fetch user attributes failed: " + failure.toString());
-//                            }
-//                    );
                 } else {
                     username = "Jimbo";
                 }

@@ -31,14 +31,23 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
     AuthUser authUser = null;
     String username;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_borrowed_tool);
         toolCompletableFuture = new CompletableFuture<>();
 
+        getCurrentUserLocation();
         setUpUIelements();
         setUpBorrowButton();
+    }
+
+    private void getCurrentUserLocation() {
+
+
+
     }
 
 
@@ -145,4 +154,5 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
             }
         });
     }
+
 }
