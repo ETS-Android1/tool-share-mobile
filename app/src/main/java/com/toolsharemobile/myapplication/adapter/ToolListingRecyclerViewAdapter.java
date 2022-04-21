@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.datastore.generated.model.Tool;
+import com.amplifyframework.datastore.generated.model.ToolTypeEnum;
 import com.toolsharemobile.myapplication.R;
 import com.toolsharemobile.myapplication.activity.FindToolActivity;
 import com.toolsharemobile.myapplication.activity.ViewToolListingActivity;
@@ -43,6 +45,15 @@ public class ToolListingRecyclerViewAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         TextView textViewToolName = holder.itemView.findViewById(R.id.textViewFindToolName);
         textViewToolName.setText(toolList.get(position).getToolType().toString());
+        ImageView imageViewToolIcon = holder.itemView.findViewById(R.id.imageViewToolIcon);
+
+        if (toolList.get(position).getToolType().equals(ToolTypeEnum.CROWBAR)) imageViewToolIcon.setImageResource(R.drawable.crowbar);
+        if (toolList.get(position).getToolType().equals(ToolTypeEnum.SLEDGEHAMMER)) imageViewToolIcon.setImageResource(R.drawable.sledgehammer);
+        if (toolList.get(position).getToolType().equals(ToolTypeEnum.DRILL)) imageViewToolIcon.setImageResource(R.drawable.drill);
+        if (toolList.get(position).getToolType().equals(ToolTypeEnum.CIRCULARSAW)) imageViewToolIcon.setImageResource(R.drawable.circular_saw);
+        if (toolList.get(position).getToolType().equals(ToolTypeEnum.JIGSAW)) imageViewToolIcon.setImageResource(R.drawable.jigsaw);
+
+
         Tool tool = toolList.get(position);
 
 

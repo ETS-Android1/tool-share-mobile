@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,12 +59,15 @@ public class ProfileActivity extends AppCompatActivity {
         toolListBorrowed = new ArrayList<>();
 
 
+
         setUpAuthUser();
+        //setUpUserInformationUI();
         setUpCreateToolNavigation();
         setUpNavBar();
         setUpLendToolRecyclerView();
         setUpBorrowToolRecyclerView();
     }
+
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -106,6 +110,12 @@ public class ProfileActivity extends AppCompatActivity {
         );
 
     }
+
+//    private void setUpUserInformationUI(){
+//
+//        TextView textViewUserName = findViewById(R.id.textViewProfileName);
+//        textViewUserName.setText(username);
+//    }
 
 
 

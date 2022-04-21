@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
+import com.amplifyframework.datastore.generated.model.ToolTypeEnum;
 import com.google.android.material.snackbar.Snackbar;
 import com.toolsharemobile.myapplication.R;
 import com.toolsharemobile.myapplication.adapter.BorrowToolRecyclerViewAdapter;
@@ -51,7 +53,6 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
 
 
     private void setUpUIelements() {
-        ImageView mapImage = findViewById(R.id.viewBorrowedToolMapImage);
         TextView toolName = findViewById(R.id.viewBorrowedToolNameTextView);
        // TextView toolOwner = findViewById(R.id.viewToolListingOwnerTextView);
         ImageView toolIcon = findViewById(R.id.viewBorrowedToolImageIcon);
@@ -100,9 +101,11 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
         {
             toolName.setText(toolToEdit.getToolType().toString());
 
-//            if (toolToEdit.getListedByUser() != null) {
-//                toolOwner.setText(toolToEdit.getListedByUser());
-//            }
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.CROWBAR)) toolIcon.setImageResource(R.drawable.crowbar);
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.JIGSAW)) toolIcon.setImageResource(R.drawable.jigsaw);
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.DRILL)) toolIcon.setImageResource(R.drawable.drill);
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.SLEDGEHAMMER)) toolIcon.setImageResource(R.drawable.sledgehammer);
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.CIRCULARSAW)) toolIcon.setImageResource(R.drawable.circular_saw);
 
         });
 
@@ -112,7 +115,7 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
 
 
     private void setUpReturnRequestButton() {
-        Button borrowToolButton = findViewById(R.id.returnToolSubmitButton);
+        LinearLayout borrowToolButton = findViewById(R.id.returnToolSubmitButton);
 
         borrowToolButton.setOnClickListener(new View.OnClickListener() {
             @Override
