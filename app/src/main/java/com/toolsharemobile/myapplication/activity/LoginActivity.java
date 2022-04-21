@@ -44,8 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         LinearLayout buttonLoginToSignUp = findViewById(R.id.buttonLoginToSignUp);
         TextInputLayout editText = findViewById(R.id.editText);
         TextInputLayout editText2 = findViewById(R.id.editText2);
-        Intent gettingIntent = getIntent();
-        String email = gettingIntent.getStringExtra(VerifyAccountActivity.TAG_VERIFY);
         EditText loginTextEmailAddress = findViewById(R.id.loginTextEmailAddress);
         EditText loginTextPassword = findViewById(R.id.loginTextPassword);
 
@@ -140,23 +138,17 @@ public class LoginActivity extends AppCompatActivity {
 
             );
 
-
-
-            //TODO Add Login
-
         });
     }
 
 
     public void setUpButtonToSignUp(){
 
-
         LinearLayout buttonToSignUp = findViewById(R.id.buttonLoginToSignUp);
 
         buttonToSignUp.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
-
 
 
         });
