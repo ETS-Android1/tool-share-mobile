@@ -7,6 +7,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
+import com.amplifyframework.datastore.generated.model.ToolTypeEnum;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -36,8 +41,11 @@ public class FindToolActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     List<Tool> toolList = null;
     FusedLocationProviderClient locationProviderClient = null;
-    String currentUserLat;
-    String currentUserLon;
+    double currentUserLat;
+    double currentUserLon;
+    Spinner toolTypeSpinner;
+    AuthUser authUser;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +53,15 @@ public class FindToolActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_tool);
         toolList = new ArrayList<>();
 
+        if (Amplify.Auth.getCurrentUser() != null) {
+            authUser = Amplify.Auth.getCurrentUser();
+            username = authUser.getUsername();
+        }
+
+
+//        setUpSpinners();
         setUpLocationServices();
+        filterToolType();
         setUpFindToolRecyclerView();
         setUpNavBar();
     }
@@ -74,8 +90,8 @@ public class FindToolActivity extends AppCompatActivity {
                         Log.e(TAG, "Location callback was null!");
                     }
 
-                    currentUserLat = Double.toString(location.getLatitude());
-                    currentUserLon = Double.toString(location.getLongitude());
+                    currentUserLat = location.getLatitude();
+                    currentUserLon = location.getLongitude();
                     Log.i(TAG, "Our latitude: " + location.getLatitude());
                     Log.i(TAG, "Our longitude: " + location.getLongitude());
                 }
@@ -105,6 +121,7 @@ public class FindToolActivity extends AppCompatActivity {
                     Log.i(TAG, "Updated Tools Successfully!");
                     toolList.clear();
                     for (Tool databaseTool : success.getData()) {
+                        if(!databaseTool.getListedByUser().equals(username))
                         toolList.add(databaseTool);
                     }
                     runOnUiThread(() -> adapter.notifyDataSetChanged());
@@ -160,5 +177,52 @@ public class FindToolActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+
+
+
+    public void filterToolType(){
+        toolTypeSpinner = findViewById(R.id.spinnerFilterToolType);
+
+        toolTypeSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.preference_category, ToolTypeEnum.values()));
+
+
+        Button buttonFilterByDistance = findViewById(R.id.buttonFilterByDistance);
+
+        buttonFilterByDistance.setOnClickListener(view -> {
+
+            Amplify.API.query(
+                    ModelQuery.list(Tool.class),
+                    success -> {
+                        Log.i(TAG, "Updated Tools Successfully!");
+                        toolList.clear();
+                        for (Tool databaseTool : success.getData()) {
+                            if (databaseTool.getToolType().equals((ToolTypeEnum) toolTypeSpinner.getSelectedItem()))
+                            toolList.add(databaseTool);
+                        }
+                        runOnUiThread(() -> adapter.notifyDataSetChanged());
+                    },
+
+                    failure -> Log.i(TAG, "failed with this response: ")
+            );
+
+
+        });
+    }
+
+
+    public static double latLongDist(double lat1, double lng1, double lat2, double lng2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double dist = (earthRadius * c);
+        double distMiles = (0.00062137119224 * dist);
+
+        return distMiles;
     }
 }
