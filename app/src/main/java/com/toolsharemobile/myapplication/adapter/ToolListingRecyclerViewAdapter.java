@@ -58,6 +58,8 @@ public class ToolListingRecyclerViewAdapter extends RecyclerView.Adapter{
         if (toolList.get(position).getToolType().equals(ToolTypeEnum.JIGSAW)) imageViewToolIcon.setImageResource(R.drawable.jigsaw);
 
 
+        TextView textViewToolUser = holder.itemView.findViewById(R.id.textViewFindToolUser);
+        textViewToolUser.setText(toolList.get(position).getListedByUser());
 
         Tool tool = toolList.get(position);
 
