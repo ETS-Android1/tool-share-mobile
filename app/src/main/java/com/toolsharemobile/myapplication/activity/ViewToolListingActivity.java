@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
+import com.amplifyframework.datastore.generated.model.ToolTypeEnum;
 import com.google.android.material.snackbar.Snackbar;
 import com.toolsharemobile.myapplication.R;
 
@@ -43,7 +45,7 @@ public class ViewToolListingActivity extends AppCompatActivity {
     }
 
     private void setUpBorrowButton() {
-        Button borrowToolButton = findViewById(R.id.borrowToolSubmitButton);
+        LinearLayout borrowToolButton = findViewById(R.id.borrowToolSubmitButton);
         borrowToolButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +89,6 @@ public class ViewToolListingActivity extends AppCompatActivity {
     }
 
     private void setUpUIelements() {
-        ImageView mapImage = findViewById(R.id.viewToolListingMapImage);
         TextView toolName = findViewById(R.id.viewToolListingNameTextView);
         TextView toolOwner = findViewById(R.id.viewToolListingOwnerTextView);
         ImageView toolIcon = findViewById(R.id.viewToolListingImageIcon);
@@ -139,6 +140,13 @@ public class ViewToolListingActivity extends AppCompatActivity {
             if (toolToEdit.getListedByUser() != null) {
                 toolOwner.setText(toolToEdit.getListedByUser());
             }
+
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.CROWBAR)) toolIcon.setImageResource(R.drawable.crowbar);
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.JIGSAW)) toolIcon.setImageResource(R.drawable.jigsaw);
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.DRILL)) toolIcon.setImageResource(R.drawable.drill);
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.SLEDGEHAMMER)) toolIcon.setImageResource(R.drawable.sledgehammer);
+            if (toolToEdit.getToolType().equals(ToolTypeEnum.CIRCULARSAW)) toolIcon.setImageResource(R.drawable.circular_saw);
+
 
         });
 
