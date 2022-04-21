@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
@@ -27,11 +28,16 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.snackbar.Snackbar;
 import com.toolsharemobile.myapplication.R;
 import com.toolsharemobile.myapplication.adapter.ToolListingRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class FindToolActivity extends AppCompatActivity {
@@ -60,7 +66,6 @@ public class FindToolActivity extends AppCompatActivity {
         }
 
 
-//        setUpSpinners();
         setUpLocationServices();
         filterToolType();
         filterByDistance();
@@ -122,8 +127,8 @@ public class FindToolActivity extends AppCompatActivity {
                     Log.i(TAG, "Updated Tools Successfully!");
                     toolList.clear();
                     for (Tool databaseTool : success.getData()) {
-                        if (!databaseTool.getListedByUser().equals(username))
-                            toolList.add(databaseTool);
+                        //if (!databaseTool.getListedByUser().equals(username))
+                        toolList.add(databaseTool);
                     }
                     runOnUiThread(() -> adapter.notifyDataSetChanged());
                 },
@@ -216,7 +221,7 @@ public class FindToolActivity extends AppCompatActivity {
                             Log.i(TAG, "Updated Tools Successfully!");
                             toolList.clear();
                             for (Tool databaseTool : success.getData()) {
-                                if(!databaseTool.getListedByUser().equals(username))
+                                if (!databaseTool.getListedByUser().equals(username))
                                     toolList.add(databaseTool);
                             }
                             runOnUiThread(() -> adapter.notifyDataSetChanged());
@@ -237,24 +242,47 @@ public class FindToolActivity extends AppCompatActivity {
 
         buttonFilterByDistance.setOnClickListener(view -> {
 
-            List<Tool> filterBYDistance = new ArrayList<>();
-            for (Tool tool : toolList) {
+
+            for (int i = 0; i < toolList.size(); i++) {
+
+                Tool tool = toolList.get(i);
 
                 double distanceToCalc = latLongDist(currentUserLat, currentUserLon, Double.parseDouble(tool.getLat()), Double.parseDouble(tool.getLon()));
+                Tool updateTool = Tool.builder()
+                        .toolType(tool.getToolType())
+                        .listedByUser(tool.getListedByUser())
+                        .lat(tool.getLat())
+                        .lon(tool.getLon())
+                        .id(tool.getId())
+                        .borrowByUser(tool.getBorrowByUser())
+                        .openBorrowRequest(tool.getOpenBorrowRequest())
+                        .openReturnRequest(tool.getOpenReturnRequest())
+                        .isAvailable(tool.getIsAvailable())
+                        .distance(distanceToCalc)
+                        .build();
 
-                System.out.println(distanceToCalc);
+                toolList.remove(i);
 
+                toolList.add(i, updateTool);
+                Amplify.API.mutate(
+                        ModelMutation.update(updateTool),
+                        successResponse -> {
+                            Log.i(TAG, username + ": Made a Tool successfully!");
 
-//            Tool newTool = Tool.builder()
-//                    .toolType(tool.getToolType())
-//                    .listedByUser(tool.getListedByUser())
-//                    .lat(tool.getLat())
-//                    .lon(tool.getLon())
-//                    .distance()
-//                    .build();
+                        },
+                        failureResponse -> {
+                            Log.i(TAG, "failed with this response: " + failureResponse);
+                            Snackbar.make(findViewById(R.id.createToolActivity), "Failed to create tool listing!", Snackbar.LENGTH_SHORT).show();
 
+                        }
+                );
 
             }
+            Comparator<Tool> toolComparator = Comparator.comparing(Tool::getDistance);
+            toolList.sort(toolComparator);
+            runOnUiThread(() -> adapter.notifyDataSetChanged());
+
+
         });
 
 

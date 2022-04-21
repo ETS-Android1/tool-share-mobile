@@ -54,6 +54,7 @@ public class BorrowToolRecyclerViewAdapter extends RecyclerView.Adapter {
 
         TextView pendingTextView = holder.itemView.findViewById(R.id.pendingTextView);
         pendingTextView.setVisibility(View.INVISIBLE);
+
         if (tool.getOpenBorrowRequest() == true || tool.getOpenReturnRequest() == true) {
             pendingTextView.setVisibility(View.VISIBLE);
         }

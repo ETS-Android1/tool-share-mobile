@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textViewFindToolName"
@@ -52,6 +52,8 @@
                 android:id="@+id/pendingTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/black"
                 android:text="Pending" />
         </LinearLayout>
 
