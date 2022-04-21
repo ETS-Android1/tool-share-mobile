@@ -19,6 +19,7 @@ import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.material.snackbar.Snackbar;
 import com.toolsharemobile.myapplication.R;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -47,37 +48,40 @@ public class SignUpActivity extends AppCompatActivity {
             String email = ((EditText) findViewById(R.id.signupTextEmailAddress)).getText().toString();
             String password = ((EditText) findViewById(R.id.signupTextPassword)).getText().toString();
             String username = ((EditText) findViewById(R.id.signupTextUserame)).getText().toString();
+            if(!confirmPassword.equals(password)){
+                Snackbar.make(findViewById(R.id.signUpactivity), "Passwords Don't Match!", Snackbar.LENGTH_SHORT).show();
+            }
+
+            if(confirmPassword.equals(password)) {
+                Amplify.Auth.signUp(
+                        email,
+                        password,
+                        AuthSignUpOptions.builder()
+                                .userAttribute(AuthUserAttributeKey.email(), email)
+                                .userAttribute(AuthUserAttributeKey.preferredUsername(), username)
 
 
+                                .build(),
+                        good -> {
+                            Log.i(TAG, "Signup completed: " + good);
+                            Intent goToVerifyIntent = new Intent(SignUpActivity.this, VerifyAccountActivity.class);
+                            goToVerifyIntent.putExtra(TAG, email);
+                            SignUpActivity.this.startActivity(goToVerifyIntent);
+                        },
+                        bad -> {
+                            Log.i(TAG, "Signup not completed: " + bad);
+                            runOnUiThread(() ->
+                            {
+                                Toast.makeText(SignUpActivity.this, "Signup not successful!", Toast.LENGTH_SHORT);
+                            });
 
-            Amplify.Auth.signUp(
-                    email,
-                    password,
-                    AuthSignUpOptions.builder()
-                            .userAttribute(AuthUserAttributeKey.email(), email)
-                            .userAttribute(AuthUserAttributeKey.preferredUsername(), username)
-
-
-                            .build(),
-                    good -> {
-                        Log.i(TAG, "Signup completed: " + good);
-                        Intent goToVerifyIntent = new Intent(SignUpActivity.this, VerifyAccountActivity.class);
-                        goToVerifyIntent.putExtra(TAG, email);
-                        SignUpActivity.this.startActivity(goToVerifyIntent);
-                    },
-                    bad -> {
-                        Log.i(TAG, "Signup not completed: " + bad);
-                        runOnUiThread(()->
-                        {
-                            Toast.makeText(SignUpActivity.this, "Signup not successful!", Toast.LENGTH_SHORT);
-                        });
-
-                    }
-            );
+                        }
+                );
 
 
-
+            }
         });
+
     }
 
 }

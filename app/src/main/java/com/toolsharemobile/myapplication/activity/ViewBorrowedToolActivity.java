@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -100,6 +99,14 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
         runOnUiThread(()->
         {
             toolName.setText(toolToEdit.getToolType().toString());
+            LinearLayout borrowToolButton = findViewById(R.id.requestSubmitButton);
+            LinearLayout pendingButton = findViewById(R.id.pendingButton);
+            pendingButton.setVisibility(View.INVISIBLE);
+            borrowToolButton.setVisibility(View.VISIBLE);
+            if (toolToEdit.getOpenBorrowRequest()){
+               borrowToolButton.setVisibility(View.INVISIBLE);
+               pendingButton.setVisibility(View.VISIBLE);
+            }
 
             if (toolToEdit.getToolType().equals(ToolTypeEnum.CROWBAR)) toolIcon.setImageResource(R.drawable.crowbar);
             if (toolToEdit.getToolType().equals(ToolTypeEnum.JIGSAW)) toolIcon.setImageResource(R.drawable.jigsaw);
@@ -115,7 +122,7 @@ public class ViewBorrowedToolActivity extends AppCompatActivity {
 
 
     private void setUpReturnRequestButton() {
-        LinearLayout borrowToolButton = findViewById(R.id.returnToolSubmitButton);
+        LinearLayout borrowToolButton = findViewById(R.id.requestSubmitButton);
 
         borrowToolButton.setOnClickListener(new View.OnClickListener() {
             @Override
