@@ -9,6 +9,7 @@ type Tool @model @auth(rules: [{allow: public}]){
   isAvailable: Boolean
   openReturnRequest: Boolean
   openBorrowRequest: Boolean
+  distance: Double
 
 }
 
