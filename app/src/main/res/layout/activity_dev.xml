@@ -15,17 +15,20 @@
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/kevinLamarca"
-        app:srcCompat="@drawable/linkedin" />
+        app:srcCompat="@drawable/linkedin"
+
+        />
 
     <TextView
         android:id="@+id/textViewTaskActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Connect"
+        android:text="Developers"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#FFF"
 
+        android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,14 +50,18 @@
         android:id="@+id/kevinLamarca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Kevin LaMarca"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="#FFF"
 
+        android:textColor="#FFF"
+        android:textSize="34sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="118dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTaskActivity" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -70,14 +77,18 @@
         android:id="@+id/joshMcCluskey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Josh McCluskey"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="#FFF"
 
+        android:textColor="#FFF"
+        android:textSize="34sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="303dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -87,23 +98,28 @@
         android:layout_marginTop="80dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:srcCompat="@drawable/shaneroach" />
+        app:srcCompat="@drawable/shaneroach"
+        />
 
     <TextView
         android:id="@+id/shaneRoach"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Shane Roach"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="#FFF"
 
+        android:textColor="#FFF"
+        android:textSize="34sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="488dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/linkedInKevin"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="48dp"
@@ -113,19 +129,19 @@
         app:srcCompat="@drawable/linkedin" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/gitHubKevin"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/linkedInKevin"
         app:layout_constraintTop_toBottomOf="@+id/kevinLamarca"
         app:srcCompat="@drawable/githubbig" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/linkedInJosh"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="48dp"
@@ -135,19 +151,19 @@
         app:srcCompat="@drawable/linkedin" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/gitHubJosh"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.196"
-        app:layout_constraintStart_toEndOf="@+id/imageView9"
+        app:layout_constraintStart_toEndOf="@+id/linkedInJosh"
         app:layout_constraintTop_toBottomOf="@+id/joshMcCluskey"
         app:srcCompat="@drawable/githubbig" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/linkedInShane"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="48dp"
@@ -157,45 +173,15 @@
         app:srcCompat="@drawable/linkedin" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/gitHubShane"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintStart_toEndOf="@+id/linkedInShane"
         app:layout_constraintTop_toBottomOf="@+id/shaneRoach"
         app:srcCompat="@drawable/githubbig" />
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="10dp"
-        app:fabCradleVerticalOffset="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="674dp">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
-            android:background="@android:color/transparent"
-            app:elevation="0dp"
-            app:menu="@menu/bottom_nav_menu" />
-
-    </com.google.android.material.bottomappbar.BottomAppBar>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/main_green"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_anchor="@id/bottomAppBar"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="618dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
