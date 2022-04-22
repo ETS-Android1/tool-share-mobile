@@ -208,7 +208,7 @@ public class FindToolActivity extends AppCompatActivity {
                         Log.i(TAG, "Updated Tools Successfully!");
                         toolList.clear();
                         for (Tool databaseTool : success.getData()) {
-                            if (databaseTool.getToolType().equals((ToolTypeEnum) toolTypeSpinner.getSelectedItem()))
+                            if (databaseTool.getToolType().equals((ToolTypeEnum) toolTypeSpinner.getSelectedItem()) && !databaseTool.getListedByUser().equals(username))
                                 toolList.add(databaseTool);
                         }
                         runOnUiThread(() -> adapter.notifyDataSetChanged());
