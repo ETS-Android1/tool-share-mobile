@@ -1,37 +1,26 @@
 package com.toolsharemobile.myapplication.activity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
-
 import com.amplifyframework.auth.AuthUser;
-
-import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.toolsharemobile.myapplication.R;
 import com.toolsharemobile.myapplication.adapter.BorrowToolRecyclerViewAdapter;
 import com.toolsharemobile.myapplication.adapter.LendToolRecyclerViewAdapter;
-import com.toolsharemobile.myapplication.adapter.ToolListingRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +38,6 @@ public class ProfileActivity extends AppCompatActivity {
     String username;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,15 +47,12 @@ public class ProfileActivity extends AppCompatActivity {
         toolListBorrowed = new ArrayList<>();
 
 
-
         setUpAuthUser();
-        //setUpUserInformationUI();
         setUpCreateToolNavigation();
         setUpNavBar();
         setUpLendToolRecyclerView();
         setUpBorrowToolRecyclerView();
     }
-
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -81,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
                     Log.i(TAG, "Updated Borrowed Tools Successfully!");
                     toolListBorrowed.clear();
                     for (Tool databaseTool : success.getData()) {
-                        if(databaseTool.getBorrowByUser() != null) {
+                        if (databaseTool.getBorrowByUser() != null) {
                             if (databaseTool.getBorrowByUser().equals(username)) {
                                 toolListBorrowed.add(databaseTool);
                             }
@@ -111,13 +96,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-//    private void setUpUserInformationUI(){
-//
-//        TextView textViewUserName = findViewById(R.id.textViewProfileName);
-//        textViewUserName.setText(username);
-//    }
-
-
 
     private void setUpLendToolRecyclerView() {
 
@@ -144,15 +122,15 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    public void setUpAuthUser(){
-        if(Amplify.Auth.getCurrentUser() != null) {
+    public void setUpAuthUser() {
+        if (Amplify.Auth.getCurrentUser() != null) {
             authUser = Amplify.Auth.getCurrentUser();
             username = authUser.getUsername();
         }
     }
 
 
-    public void setUpNavBar(){
+    public void setUpNavBar() {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.bnm_profile);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -168,14 +146,7 @@ public class ProfileActivity extends AppCompatActivity {
                     Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                     startActivity(intent);
                     return true;
-                }
-//                else if (id == R.id.bnm_profile) {
-//
-//                    Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
-//                    startActivity(intent);
-//                    return true;
-//                }
-                else if (id == R.id.bnm_findTools) {
+                } else if (id == R.id.bnm_findTools) {
 
                     Intent intent = new Intent(ProfileActivity.this, FindToolActivity.class);
                     startActivity(intent);
@@ -189,7 +160,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    public void setUpCreateToolNavigation(){
+    public void setUpCreateToolNavigation() {
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fabHome);
 
@@ -198,7 +169,6 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
-
 
 
     }

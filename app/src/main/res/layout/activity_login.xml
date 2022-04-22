@@ -101,22 +101,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
         android:text="Login"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="60sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <LinearLayout
         android:id="@+id/buttonLoginSubmit"
