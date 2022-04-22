@@ -14,13 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
-import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Tool;
 import com.amplifyframework.datastore.generated.model.ToolTypeEnum;
 import com.google.android.material.snackbar.Snackbar;
 import com.toolsharemobile.myapplication.R;
-import com.toolsharemobile.myapplication.adapter.BorrowToolRecyclerViewAdapter;
 import com.toolsharemobile.myapplication.adapter.LendToolRecyclerViewAdapter;
 
 import java.util.concurrent.CompletableFuture;

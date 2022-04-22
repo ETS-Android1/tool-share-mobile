@@ -1,5 +1,7 @@
 package com.toolsharemobile.myapplication.activity;
 
+import static com.toolsharemobile.myapplication.utility.SortToolList.sortToolList;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -34,11 +36,7 @@ import com.toolsharemobile.myapplication.R;
 import com.toolsharemobile.myapplication.adapter.ToolListingRecyclerViewAdapter;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class FindToolActivity extends AppCompatActivity {
@@ -70,6 +68,7 @@ public class FindToolActivity extends AppCompatActivity {
         setUpLocationServices();
         filterToolType();
         filterByDistance();
+        resetToolsListing();
         setUpFindToolRecyclerView();
         setUpNavBar();
         setUpCreateToolNavigation();
@@ -129,7 +128,7 @@ public class FindToolActivity extends AppCompatActivity {
                     Log.i(TAG, "Updated Tools Successfully!");
                     toolList.clear();
                     for (Tool databaseTool : success.getData()) {
-                        //if (!databaseTool.getListedByUser().equals(username))
+                        if (!databaseTool.getListedByUser().equals(username))
                         toolList.add(databaseTool);
                     }
                     runOnUiThread(() -> adapter.notifyDataSetChanged());
@@ -213,6 +212,10 @@ public class FindToolActivity extends AppCompatActivity {
             );
         });
 
+
+    }
+
+    public void resetToolsListing(){
         Button resetFilter = findViewById(R.id.filterResetButton);
         resetFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -294,8 +297,10 @@ public class FindToolActivity extends AppCompatActivity {
                 );
 
             }
-            Comparator<Tool> toolComparator = Comparator.comparing(Tool::getDistance);
-            toolList.sort(toolComparator);
+
+            sortToolList(toolList);
+//            Comparator<Tool> toolComparator = Comparator.comparing(Tool::getDistance);
+//            toolList.sort(toolComparator);
             runOnUiThread(() -> adapter.notifyDataSetChanged());
 
 
