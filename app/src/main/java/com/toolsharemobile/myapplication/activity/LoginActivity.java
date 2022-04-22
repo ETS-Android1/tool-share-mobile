@@ -106,7 +106,8 @@ public class LoginActivity extends AppCompatActivity {
             Amplify.Auth.signOut(
                     () -> {
                         Log.i(TAG, "Logout completed: ");
-                        Intent goToLoginIntent = new Intent(LoginActivity.this, LoginActivity.class);
+
+                        Intent goToLoginIntent = new Intent(LoginActivity.this, MainActivity.class);
                         LoginActivity.this.startActivity(goToLoginIntent);
                     },
                     failure -> {
