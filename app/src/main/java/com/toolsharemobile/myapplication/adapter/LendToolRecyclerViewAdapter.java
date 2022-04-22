@@ -62,6 +62,7 @@ public class LendToolRecyclerViewAdapter extends RecyclerView.Adapter {
 
         textViewToolName.setText(toolList.get(position).getToolType().toString());
         TextView textViewToolUser = holder.itemView.findViewById(R.id.textViewFindToolUser);
+        textViewToolUser.setVisibility(View.INVISIBLE);
         textViewToolUser.setText(toolList.get(position).getListedByUser());
         Tool tool = toolList.get(position);
 
