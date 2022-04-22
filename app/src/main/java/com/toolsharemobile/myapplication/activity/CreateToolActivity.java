@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -19,11 +21,14 @@ import com.amplifyframework.datastore.generated.model.Tool;
 import com.amplifyframework.datastore.generated.model.ToolTypeEnum;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 import com.toolsharemobile.myapplication.R;
 
 public class CreateToolActivity extends AppCompatActivity {
-
+    BottomNavigationView bottomNavigationView;
     String TAG = " CREATE TOOL ACTIVITY";
     Spinner toolTypeSpinner = null;
     FusedLocationProviderClient locationProviderClient = null;
@@ -88,6 +93,7 @@ public class CreateToolActivity extends AppCompatActivity {
 
         setUpCreateTool();
         setUpSpinners();
+        setUpNavBar();
 
 
     }
@@ -142,5 +148,45 @@ public class CreateToolActivity extends AppCompatActivity {
         toolTypeSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.preference_category, ToolTypeEnum.values()));
     }
 
+    public void setUpNavBar() {
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bnm_developers);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+
+                int id = item.getItemId();
+
+                if (id == R.id.bnm_settings) {
+
+                    Intent intent = new Intent(CreateToolActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.bnm_profile) {
+
+                    Intent intent = new Intent(CreateToolActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.bnm_findTools) {
+
+                    Intent intent = new Intent(CreateToolActivity.this, FindToolActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (id == R.id.bnm_developers) {
+                    Intent intent = new Intent(CreateToolActivity.this,DevActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+
+
+
+
+                return false;
+            }
+
+        });
+    }
 
 }
