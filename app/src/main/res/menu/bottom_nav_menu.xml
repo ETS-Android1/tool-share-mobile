@@ -4,12 +4,12 @@
 
     <item
         android:id="@+id/bnm_profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/profileicon"
         android:title="Profile" />
 
     <item
         android:id="@+id/bnm_findTools"
-        android:icon="?android:attr/actionModeWebSearchDrawable"
+        android:icon="@drawable/searchicon"
         android:title="Find Tools" />
 
     <item

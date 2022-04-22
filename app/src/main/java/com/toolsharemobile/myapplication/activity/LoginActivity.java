@@ -17,12 +17,13 @@ import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.toolsharemobile.myapplication.R;
 
 public class LoginActivity extends AppCompatActivity {
-
+    BottomNavigationView bottomNavigationView;
     private static final String TAG = "LOGIN ACTIVITY";
 
     @Override
@@ -34,7 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         loginLoginButtonSetUp();
         logoutButtonSetup();
         setUpButtonToSignUp();
-
+        setUpNavBar();
+        setUpCreateToolNavigation();
     }
 
     @Override
@@ -50,8 +52,10 @@ public class LoginActivity extends AppCompatActivity {
         TextInputLayout editText2 = findViewById(R.id.editText2);
         EditText loginTextEmailAddress = findViewById(R.id.loginTextEmailAddress);
         EditText loginTextPassword = findViewById(R.id.loginTextPassword);
-
+        FloatingActionButton floatingActionButton = findViewById(R.id.fabHome);
         if(currentUser == null){
+            bottomNavigationView.setVisibility(View.INVISIBLE);
+            floatingActionButton.setVisibility(View.INVISIBLE);
             buttonLoginSubmit.setVisibility(View.VISIBLE);
             buttonLoginToSignUp.setVisibility(View.VISIBLE);
             editText.setVisibility(View.VISIBLE);
@@ -62,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
             Log.i(TAG, "onCreate: Username:  " + preferredUserName);
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            floatingActionButton.setVisibility(View.VISIBLE);
             buttonLoginSubmit.setVisibility(View.INVISIBLE);
             buttonLoginToSignUp.setVisibility(View.INVISIBLE);
             editText.setVisibility(View.INVISIBLE);
@@ -157,6 +163,60 @@ public class LoginActivity extends AppCompatActivity {
 
 
         });
+
+    }
+
+    public void setUpNavBar() {
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bnm_developers);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+
+                int id = item.getItemId();
+
+                if (id == R.id.bnm_settings) {
+
+                    Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.bnm_profile) {
+
+                    Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.bnm_findTools) {
+
+                    Intent intent = new Intent(LoginActivity.this, FindToolActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (id == R.id.bnm_developers) {
+                    Intent intent = new Intent(LoginActivity.this,DevActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+
+
+
+
+                return false;
+            }
+
+        });
+    }
+    public void setUpCreateToolNavigation(){
+
+        FloatingActionButton floatingActionButton = findViewById(R.id.fabHome);
+
+        floatingActionButton.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, CreateToolActivity.class);
+            startActivity(intent);
+
+        });
+
+
 
     }
 

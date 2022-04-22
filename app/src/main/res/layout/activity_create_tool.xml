@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/createToolActivity"
@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     android:background="@drawable/onboarding_ui"
     tools:context=".activity.CreateToolActivity">
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:id="@+id/textViewTaskActivity"
         android:layout_width="match_parent"
@@ -25,35 +27,34 @@
         app:layout_constraintVertical_bias="0.056" />
 
 
-    <LinearLayout
-        android:id="@+id/buttonAddToolSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="64dp"
-        android:background="@drawable/white"
-        android:elevation="10dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:textColor="@color/black"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create Tool Listing"
+        <LinearLayout
+            android:id="@+id/buttonAddToolSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="152dp"
+            android:background="@drawable/white"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
             android:textColor="@color/black"
-            android:textSize="22sp" />
 
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Tool Listing"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
 
-    <Spinner
+        </LinearLayout>
+
+        <Spinner
         android:id="@+id/spinnerAddToolType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,6 +76,35 @@
 
         app:layout_constraintBottom_toTopOf="@+id/spinnerAddToolType"
         app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="20dp">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            app:elevation="0dp"
+            app:menu="@menu/bottom_nav_menu" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/main_green"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_anchor="@id/bottomAppBar" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
