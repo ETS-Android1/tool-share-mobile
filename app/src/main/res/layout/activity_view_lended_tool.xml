@@ -7,21 +7,34 @@
     android:background="@drawable/view_tool_ui"
     tools:context=".activity.ViewLendedToolActivity">
 
+
+    <TextView
+        android:id="@+id/textViewLendedToolBorrowUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Pending User Borrow Request"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/viewOwnedToolNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="100dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="4dp"
         android:gravity="center"
 
         android:text="Tool Name"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <ImageView
         android:id="@+id/viewOwnedToolImageIcon"
@@ -67,8 +80,8 @@
         android:id="@+id/confirmButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="88dp"
 
 
         android:text="Confirm"
@@ -79,8 +92,8 @@
         android:id="@+id/denyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="72dp"
         android:text="Deny"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
