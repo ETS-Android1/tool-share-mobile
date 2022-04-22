@@ -10,6 +10,11 @@
       "StackName": "amplify-tool-share-mobile-dev-134326",
       "StackId": "arn:aws:cloudformation:us-west-2:573887199718:stack/amplify-tool-share-mobile-dev-134326/5e56bfc0-c021-11ec-ae73-06425efff69d",
       "AmplifyAppId": "d220lhndpl2fqv"
+    },
+    "categories": {
+      "auth": {
+        "toolsharemobile9c451177": {}
+      }
     }
   }
 }

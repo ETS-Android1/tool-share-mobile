@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_ui"
+    android:background="@drawable/view_tool_ui"
     tools:context=".activity.VerifyAccountActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -68,6 +68,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline3">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/verifyTextEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#50ffffff"
@@ -93,11 +94,12 @@
         app:passwordToggleTint="#80000000">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/verifyTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#fff"
-            android:hint="Verification Code"
 
+            android:hint="Verification Code"
             android:inputType="textPassword"
             android:textColor="#000" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -107,12 +109,38 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="Verify Account"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="50sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/buttonVerifyAccountSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="88dp"
+        android:background="@drawable/green"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:textColor="@color/black"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verify Account"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,15 @@
-type Tool @model {
+type Tool @model @auth(rules: [{allow: public}]){
   id: ID!
   toolType: ToolTypeEnum!
   listedByUser: String!
-  location: String!
+  lat: String
+  lon: String
   borrowByUser: String
   S3imageKey: String
   isAvailable: Boolean
   openReturnRequest: Boolean
   openBorrowRequest: Boolean
+  distance: Float
 
 }
 

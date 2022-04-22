@@ -2,68 +2,79 @@ package com.toolsharemobile.myapplication.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.util.Log;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.options.AuthSignUpOptions;
+import com.amplifyframework.core.Amplify;
+import com.google.android.material.snackbar.Snackbar;
 import com.toolsharemobile.myapplication.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+    String TAG = "SIGN UP ACTIVITY";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        signupButtonSetUp();
 
-        setUpNavBar();
+
     }
 
 
-
-    public void setUpNavBar(){
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.bnm_settings);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
-                int id = item.getItemId();
-
-                if(id == R.id.bnm_home) {
-                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                    startActivity(intent);
-
-                    return true;
-                }
-                else if (id == R.id.bnm_settings) {
-
-                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-                else if (id == R.id.bnm_profile) {
-
-                    Intent intent = new Intent(SignUpActivity.this, ProfileActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-                else if (id == R.id.bnm_findTools) {
-
-                    Intent intent = new Intent(SignUpActivity.this, FindToolActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
+    public void signupButtonSetUp(){
+        LinearLayout buttonSignUpToVerify = findViewById(R.id.buttonSignUpToVerify);
+        buttonSignUpToVerify.setOnClickListener(view -> {
+            System.out.println("Signup signup Button!");
+            Log.e(TAG, "onClick: Signup signup Button!");
+            String confirmPassword = ((EditText) findViewById(R.id.editTextTextPasswordConfirm)).getText().toString();
 
 
-                return false;
+            String email = ((EditText) findViewById(R.id.signupTextEmailAddress)).getText().toString();
+            String password = ((EditText) findViewById(R.id.signupTextPassword)).getText().toString();
+            String username = ((EditText) findViewById(R.id.signupTextUserame)).getText().toString();
+            if(!confirmPassword.equals(password)){
+                Snackbar.make(findViewById(R.id.signUpactivity), "Passwords Don't Match!", Snackbar.LENGTH_SHORT).show();
             }
 
+            if(confirmPassword.equals(password)) {
+                Amplify.Auth.signUp(
+                        email,
+                        password,
+                        AuthSignUpOptions.builder()
+                                .userAttribute(AuthUserAttributeKey.email(), email)
+                                .userAttribute(AuthUserAttributeKey.preferredUsername(), username)
+
+
+                                .build(),
+                        good -> {
+                            Log.i(TAG, "Signup completed: " + good);
+                            Intent goToVerifyIntent = new Intent(SignUpActivity.this, VerifyAccountActivity.class);
+                            goToVerifyIntent.putExtra(TAG, email);
+                            SignUpActivity.this.startActivity(goToVerifyIntent);
+                        },
+                        bad -> {
+                            Log.i(TAG, "Signup not completed: " + bad);
+                            runOnUiThread(() ->
+                            {
+                                Toast.makeText(SignUpActivity.this, "Signup not successful!", Toast.LENGTH_SHORT);
+                            });
+
+                        }
+                );
+
+
+            }
         });
+
     }
+
 }

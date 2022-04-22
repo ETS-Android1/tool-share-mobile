@@ -4,17 +4,16 @@ query GetTool($id: ID!) {
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
     openReturnRequest
     openBorrowRequest
+    distance
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
 query ListTools(
@@ -27,51 +26,17 @@ query ListTools(
       id
       toolType
       listedByUser
-      location
+      lat
+      lon
       borrowByUser
       S3imageKey
       isAvailable
       openReturnRequest
       openBorrowRequest
+      distance
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
     nextToken
-    startedAt
-  }
-}
-query SyncTools(
-  $filter: ModelToolFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncTools(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      id
-      toolType
-      listedByUser
-      location
-      borrowByUser
-      S3imageKey
-      isAvailable
-      openReturnRequest
-      openBorrowRequest
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-    nextToken
-    startedAt
   }
 }

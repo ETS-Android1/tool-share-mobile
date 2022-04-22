@@ -7,17 +7,16 @@ mutation CreateTool(
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
     openReturnRequest
     openBorrowRequest
+    distance
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
 mutation UpdateTool(
@@ -28,17 +27,16 @@ mutation UpdateTool(
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
     openReturnRequest
     openBorrowRequest
+    distance
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
 mutation DeleteTool(
@@ -49,16 +47,15 @@ mutation DeleteTool(
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
     openReturnRequest
     openBorrowRequest
+    distance
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }

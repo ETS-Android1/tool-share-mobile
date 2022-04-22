@@ -2,19 +2,27 @@ package com.toolsharemobile.myapplication.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import com.amplifyframework.auth.AuthUser;
+import com.amplifyframework.core.Amplify;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 import com.toolsharemobile.myapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+
+    LinearLayout buttonToLogin, buttonToSignUp;
+    Animation atg, btgone, btgtwo;
+    AuthUser authUser;
+    CardView ivSplash;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,67 +30,64 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        setUpCreateToolNavigation();
-        setUpNavBar();
+        setUpButtonToProfile();
+        setUpButtonToSignUp();
+
+
+
+
+
+        ivSplash = findViewById(R.id.imageViewSplashLogo);
+        atg = AnimationUtils.loadAnimation(this, R.anim.atg);
+        btgone = AnimationUtils.loadAnimation(this, R.anim.btgone);
+        btgtwo = AnimationUtils.loadAnimation(this, R.anim.btgtwo);
+
+        ivSplash.startAnimation(atg);
+        buttonToLogin.startAnimation(btgone);
+        buttonToSignUp.startAnimation(btgtwo);
     }
 
 
-    public void setUpCreateToolNavigation(){
+    public void setUpButtonToProfile(){
 
-        FloatingActionButton floatingActionButton = findViewById(R.id.fabHome);
+        buttonToLogin = findViewById(R.id.buttonSplashToLogin);
 
-        floatingActionButton.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, CreateToolActivity.class);
-            startActivity(intent);
+        buttonToLogin.setOnClickListener(view -> {
 
-        });
+            if (Amplify.Auth.getCurrentUser() != null) {
+                authUser = Amplify.Auth.getCurrentUser();
+                username = authUser.getUsername();
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
 
-
-
-    }
-
-    public void setUpNavBar(){
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.getMenu().getItem(2).isEnabled();
-        bottomNavigationView.setSelectedItemId(R.id.bnm_home);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
-                int id = item.getItemId();
-
-                if(id == R.id.bnm_home) {
-                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                    startActivity(intent);
-
-                    return true;
-                }
-                else if (id == R.id.bnm_settings) {
-
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-                else if (id == R.id.bnm_profile) {
-
-                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-                else if (id == R.id.bnm_findTools) {
-
-                    Intent intent = new Intent(MainActivity.this, FindToolActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-
-
-                return false;
+            } else {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
-
         });
+
     }
 
+    public void setUpButtonToSignUp(){
+
+
+        buttonToSignUp = findViewById(R.id.buttonSplashToSignUp);
+
+
+        buttonToSignUp.setOnClickListener(view -> {
+
+            if (Amplify.Auth.getCurrentUser() != null) {
+                authUser = Amplify.Auth.getCurrentUser();
+                username = authUser.getUsername();
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+
+            } else {
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
 
 }

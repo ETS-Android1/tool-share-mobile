@@ -4,17 +4,16 @@ subscription OnCreateTool {
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
     openReturnRequest
     openBorrowRequest
+    distance
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
 subscription OnUpdateTool {
@@ -22,17 +21,16 @@ subscription OnUpdateTool {
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
     openReturnRequest
     openBorrowRequest
+    distance
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
 subscription OnDeleteTool {
@@ -40,16 +38,15 @@ subscription OnDeleteTool {
     id
     toolType
     listedByUser
-    location
+    lat
+    lon
     borrowByUser
     S3imageKey
     isAvailable
     openReturnRequest
     openBorrowRequest
+    distance
     createdAt
     updatedAt
-    _version
-    _deleted
-    _lastChangedAt
   }
 }
