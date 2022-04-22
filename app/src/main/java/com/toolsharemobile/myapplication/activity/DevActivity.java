@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.toolsharemobile.myapplication.R;
 
@@ -21,7 +22,8 @@ public class DevActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dev);
 
-//        setUpNavBar();
+        setUpNavBar();
+        setUpCreateToolNavigation();
         linkGithubLinkedInSetup();
     }
 
@@ -69,45 +71,57 @@ public class DevActivity extends AppCompatActivity {
 
 
 
-//    public void setUpNavBar() {
-//        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-//        bottomNavigationView.setSelectedItemId(R.id.bnm_developers);
-//        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//
-//                int id = item.getItemId();
-//
-//                if (id == R.id.bnm_settings) {
-//
-//                    Intent intent = new Intent(DevActivity.this, LoginActivity.class);
-//                    startActivity(intent);
-//                    return true;
-//                } else if (id == R.id.bnm_profile) {
-//
-//                    Intent intent = new Intent(DevActivity.this, ProfileActivity.class);
-//                    startActivity(intent);
-//                    return true;
-//                } else if (id == R.id.bnm_findTools) {
-//
-//                    Intent intent = new Intent(DevActivity.this, FindToolActivity.class);
-//                    startActivity(intent);
-//                    return true;
-//                }
-//                else if (id == R.id.bnm_developers) {
-//                    Intent intent = new Intent(DevActivity.this,DevActivity.class);
-//                    startActivity(intent);
-//                    return true;
-//                }
-//
-//
-//
-//
-//                return false;
-//            }
-//
-//        });
-//    }
+    public void setUpNavBar() {
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bnm_developers);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+
+                int id = item.getItemId();
+
+                if (id == R.id.bnm_settings) {
+
+                    Intent intent = new Intent(DevActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.bnm_profile) {
+
+                    Intent intent = new Intent(DevActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.bnm_findTools) {
+
+                    Intent intent = new Intent(DevActivity.this, FindToolActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (id == R.id.bnm_developers) {
+                    Intent intent = new Intent(DevActivity.this,DevActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+
+
+
+
+                return false;
+            }
+
+        });
+    }
+    public void setUpCreateToolNavigation(){
+
+        FloatingActionButton floatingActionButton = findViewById(R.id.fabHome);
+
+        floatingActionButton.setOnClickListener(view -> {
+            Intent intent = new Intent(DevActivity.this, CreateToolActivity.class);
+            startActivity(intent);
+
+        });
+
+
+
+    }
 }
