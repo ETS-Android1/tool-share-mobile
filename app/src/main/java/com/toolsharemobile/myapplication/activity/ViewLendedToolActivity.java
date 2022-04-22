@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.toolsharemobile.myapplication.R;
 import com.toolsharemobile.myapplication.adapter.LendToolRecyclerViewAdapter;
 
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -52,6 +53,9 @@ public class ViewLendedToolActivity extends AppCompatActivity {
 
         TextView toolName = findViewById(R.id.viewOwnedToolNameTextView);
         ImageView toolIcon = findViewById(R.id.viewOwnedToolImageIcon);
+        TextView toolBorrowUser = findViewById(R.id.textViewLendedToolBorrowUser);
+
+        toolBorrowUser.setVisibility(View.INVISIBLE);
 
 
         Intent callingIntent = getIntent();
@@ -95,7 +99,13 @@ public class ViewLendedToolActivity extends AppCompatActivity {
 
         runOnUiThread(() ->
         {
+
             toolName.setText(toolToEdit.getToolType().toString());
+            if (toolToEdit.getOpenBorrowRequest()){
+                toolBorrowUser.setVisibility(View.VISIBLE);
+                toolBorrowUser.setText(toolToEdit.getBorrowByUser() + " is requesting to borrow this tool");
+            }
+
 
             if (toolToEdit.getToolType().equals(ToolTypeEnum.CROWBAR)) toolIcon.setImageResource(R.drawable.crowbar);
             if (toolToEdit.getToolType().equals(ToolTypeEnum.JIGSAW)) toolIcon.setImageResource(R.drawable.jigsaw);
