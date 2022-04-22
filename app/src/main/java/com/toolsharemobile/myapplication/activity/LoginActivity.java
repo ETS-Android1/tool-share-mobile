@@ -3,17 +3,21 @@ package com.toolsharemobile.myapplication.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.core.Amplify;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.toolsharemobile.myapplication.R;
 
@@ -55,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             loginTextEmailAddress.setVisibility(View.VISIBLE);
             loginTextPassword.setVisibility(View.VISIBLE);
             buttonLogout.setVisibility(View.INVISIBLE);
+
         } else {
             Log.i(TAG, "onCreate: Username:  " + preferredUserName);
             buttonLoginSubmit.setVisibility(View.INVISIBLE);
@@ -154,4 +159,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

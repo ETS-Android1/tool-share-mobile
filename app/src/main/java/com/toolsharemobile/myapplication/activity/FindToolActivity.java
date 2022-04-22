@@ -177,7 +177,13 @@ public class FindToolActivity extends AppCompatActivity {
                     Intent intent = new Intent(FindToolActivity.this, FindToolActivity.class);
                     startActivity(intent);
                     return true;
+                } else if (id == R.id.bnm_developers) {
+                    Intent intent = new Intent(FindToolActivity.this,DevActivity.class);
+                    startActivity(intent);
+                    return true;
                 }
+
+
 
 
                 return false;
